@@ -2,7 +2,7 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import FileUpload from './components/FileUpload/FileUpload'
 import ImagePreview from './components/ImagePreview/ImagePreview'
-import {processSVG} from './util/processsvg.js'
+import { processSVG, getVarsFromSVG } from './util/processsvg.js'
 class App extends Component {
   state = {
     files: []
@@ -14,8 +14,9 @@ class App extends Component {
       const parser = new DOMParser();
       const doc = parser.parseFromString(reader.result, "image/svg+xml");
       const imgArray = []
+      const processvars = getVarsFromSVG(doc.documentElement)
       for (let index = 0; index <= 23; index++) {
-        imgArray.push(processSVG(doc.documentElement.cloneNode(true)))
+        imgArray.push(processSVG(doc.documentElement.cloneNode(true), processvars))
         
       }
       this.setState({ files: imgArray})
