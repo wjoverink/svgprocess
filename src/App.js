@@ -1,28 +1,64 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { css, StyleSheet } from 'aphrodite/no-important'
+import React, { Component } from 'react'
+import FileUpload from './components/FileUpload/FileUpload'
+import ImagePreview from './components/ImagePreview/ImagePreview'
+import {processSVG} from './util/processsvg.js'
 class App extends Component {
+  state = {
+    files: []
+  }
+
+  onImageChange = (file) => {
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(reader.result, "image/svg+xml");
+      const imgArray = []
+      for (let index = 0; index <= 23; index++) {
+        imgArray.push(processSVG(doc.documentElement.cloneNode(true)))
+        
+      }
+      this.setState({ files: imgArray})
+    }
+    reader.readAsText(file)
+  }
+
   render() {
+    const {files} = this.state
     return (
-      <div className="App">
+      <div className={css(styles.mainWrapper)}>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+        Process-svg
         </header>
+        <FileUpload onChange={this.onImageChange}/>
+        <div className={css(styles.wrapper)}>
+          {files.map((item, index) => (
+            <ImagePreview className={css(styles.image)} key={"image" + index} image={item}/>
+          ))}
+        </div>
       </div>
-    );
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  mainWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  wrapper: {
+    flex: 1,
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'row',
+    position: 'relative',
+    flexWrap: 'wrap'
+  },
+  image: {
+    width:400,
+    height:400,
+    margin:20
+  }
+})
 
 export default App;
