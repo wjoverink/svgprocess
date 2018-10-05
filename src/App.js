@@ -7,34 +7,48 @@ class App extends Component {
   state = {
     files: []
   }
-
-  onImageChange = (file) => {
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(reader.result, "image/svg+xml");
-      const imgArray = []
-      const processvars = getVarsFromSVG(doc.documentElement)
-      for (let index = 0; index <= 23; index++) {
-        imgArray.push(processSVG(doc.documentElement.cloneNode(true), processvars))
-        
+  onLoaderfinished = (total, count, imgList) => {
+    return (newImages) => {
+      imgList = imgList.concat(newImages)
+      if (total === count) {
+        this.setState({ files: imgList })
       }
-      this.setState({ files: imgArray})
+      count++
     }
-    reader.readAsText(file)
+  }
+
+  onImageChange = (files) => {
+    const callback = this.onLoaderfinished(files.length, 1,  [])
+    const parser = new DOMParser()
+    for (var i = 0; i < files.length; i++) { //for multiple files          
+      (function (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          const doc = parser.parseFromString(e.target.result, "image/svg+xml")
+          const imgArray = []
+          const processvars = getVarsFromSVG(doc.documentElement)
+          for (let index = 0; index <= 3; index++) {
+            imgArray.push(processSVG(doc.documentElement.cloneNode(true), processvars))
+          }
+
+          callback(imgArray)
+        }
+        reader.readAsText(file, "UTF-8");
+      })(files[i]);
+    }
   }
 
   render() {
-    const {files} = this.state
+    const { files } = this.state
     return (
       <div className={css(styles.mainWrapper)}>
         <header className="App-header">
-        Process-svg
+          Process-svg
         </header>
-        <FileUpload onChange={this.onImageChange}/>
+        <FileUpload onChange={this.onImageChange} />
         <div className={css(styles.wrapper)}>
           {files.map((item, index) => (
-            <ImagePreview className={css(styles.image)} key={"image" + index} image={item}/>
+            <ImagePreview className={css(styles.image)} key={"image" + index} image={item} />
           ))}
         </div>
       </div>
@@ -56,9 +70,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   image: {
-    width:400,
-    height:400,
-    margin:20
+    width: 400,
+    height: 400,
+    margin: 20
   }
 })
 

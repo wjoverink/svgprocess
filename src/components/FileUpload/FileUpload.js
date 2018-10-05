@@ -6,13 +6,13 @@ class FileUpload extends Component {
     onChange: PropTypes.func,
   }
   fileChangedHandler = (event) => {
-    this.props.onChange(event.target.files[0])
+    this.props.onChange(event.target.files)
   }
 
   render() {
     const {...other} = this.props
     return (
-      <input type="file" accept=".svg" {...other} onChange={this.fileChangedHandler}></input>      
+      <input type="file" accept=".svg" multiple="multiple" {...other} onChange={this.fileChangedHandler}></input>      
     )
   }
 }

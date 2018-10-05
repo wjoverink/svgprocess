@@ -3,7 +3,9 @@ import contrast from 'get-contrast'
 
 const processFunctions = {
   randomFill: (element, idArray, vars) => {
-    element.setAttribute("style", "fill:" + randomcolor())
+    let a = randomcolor()
+    vars["mainColor"] = a
+    element.setAttribute("style", "fill:" + a)
   },
   fillMaincolor: (element, idArray, vars) => {
     element.setAttribute("style", "fill:" + vars["mainColor"])
@@ -20,6 +22,32 @@ const processFunctions = {
     var random = Math.floor((Math.random() * pal.length-1) + 1)
     vars["mainColor"] = pal[random]
     element.setAttribute("style", "fill:" + pal[random])
+  },
+  colorMaxContrast:  (element, idArray, vars) => {
+    for (let index = 0; index < 30; index++) {
+      const pal =  vars["colorPalette"]
+      var b = pal[Math.floor((Math.random() * pal.length-1) + 1)]
+      var c = contrast.ratio(vars["mainColor"], b)
+      if (c>1.4){
+
+        element.setAttribute("style", "fill:" + b)
+        vars["secondaryColor"] = b
+        break
+      }
+    }
+  },
+  colorMaxContrastSecondary:  (element, idArray, vars) => {
+    for (let index = 0; index < 30; index++) {
+      const pal =  vars["colorPalette"]
+      var b = pal[Math.floor((Math.random() * pal.length-1) + 1)]
+      var c = contrast.ratio(vars["secondaryColor"], b)
+      var e = contrast.ratio(vars["mainColor"], b)
+      if (c>2 && e>1.4){
+
+        element.setAttribute("style", "fill:" + b)
+        break
+      }
+    }
   },
   palleteColorMaxContrast:  (element, idArray, vars) => {
     const pal =  vars["colorPalette"]
