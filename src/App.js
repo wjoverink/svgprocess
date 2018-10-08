@@ -3,9 +3,11 @@ import React, { Component } from 'react'
 import FileUpload from './components/FileUpload/FileUpload'
 import ImagePreview from './components/ImagePreview/ImagePreview'
 import { processSVG, getVarsFromSVG } from './util/processsvg.js'
+import TextField from '@material-ui/core/TextField';
 class App extends Component {
   state = {
-    files: []
+    files: [],
+    numberOfImages: 10
   }
   onLoaderfinished = (total, count, imgList) => {
     return (newImages) => {
@@ -19,6 +21,7 @@ class App extends Component {
 
   onImageChange = (files) => {
     this.setState({ files: [] })
+    const totalImages = this.state.numberOfImages
     const callback = this.onLoaderfinished(files.length, 1,  [])
     const parser = new DOMParser()
     for (var i = 0; i < files.length; i++) { //for multiple files          
@@ -28,7 +31,7 @@ class App extends Component {
           const doc = parser.parseFromString(e.target.result, "image/svg+xml")
           const imgArray = []
           const processvars = getVarsFromSVG(doc.documentElement)
-          for (let index = 0; index <= 10; index++) {
+          for (let index = 0; index <= totalImages; index++) {
             imgArray.push(processSVG(doc.documentElement.cloneNode(true), processvars))
           }
 
@@ -39,6 +42,12 @@ class App extends Component {
     }
   }
 
+  handleChange = event => {
+    this.setState({
+      numberOfImages: parseInt(event.target.value),
+    });
+  };
+
   render() {
     const { files } = this.state
     return (
@@ -46,7 +55,14 @@ class App extends Component {
         <header className="App-header">
           Process-svg
         </header>
-        <FileUpload onChange={this.onImageChange} />
+        <div className={css(styles.controlsWrapper)}>
+          <FileUpload onChange={this.onImageChange} />
+          <TextField
+            label="images per SVG"
+            value={this.state.numberOfImages}
+            onChange={this.handleChange}
+          />
+        </div>
         <div className={css(styles.wrapper)}>
           {files.map((item, index) => (
             <ImagePreview className={css(styles.image)} key={"image" + index} image={item} />
@@ -62,13 +78,20 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
+  controlsWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
   wrapper: {
     flex: 1,
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'row',
     position: 'relative',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    borderTop: '1px solid gray',
+    marginTop: 20
   },
   image: {
     width: 400,
