@@ -19,8 +19,9 @@ const processSVG = (svg, processvars) => {
 }
 
 const recursivelyGetChildNodes = (svg) => {
-  let retVal = [...svg.childNodes]
+  let retVal = []
   svg.childNodes.forEach((child) => { 
+    retVal.push(child)
     if (child.childNodes && child.childNodes.length>0){
       retVal = retVal.concat(recursivelyGetChildNodes(child))
     }

@@ -1,87 +1,70 @@
-import randomcolor from 'randomcolor'
 import contrast from 'get-contrast'
 
 const processFunctions = {
-  randomFill: (element, idArray, vars) => {
-    let a = randomcolor()
-    vars["mainColor"] = a
-    element.setAttribute("style", "fill:" + a)
-  },
-  fillMaincolor: (element, idArray, vars) => {
-    element.setAttribute("style", "fill:" + vars["mainColor"])
-  },
-  stroke :  (element, idArray, vars) => {
-    element.setAttribute('stroke', randomcolor({
-      luminosity: 'light',
-      hue: 'blue'
-    }))
-    element.setAttribute('stroke-width','4')
-  },
   palleteColor:  (element, idArray, vars) => {
     const pal =  vars["colorPalette"]
     var random = Math.floor((Math.random() * pal.length-1) + 1)
-    vars["mainColor"] = pal[random]
+    while (vars["lastUsedColor"] === pal[random] && pal.length>1) {
+      random = Math.floor((Math.random() * pal.length-1) + 1)
+    }
+    vars["lastUsedColor"] = pal[random]
     element.setAttribute("style", "fill:" + pal[random])
   },
+  isMainColor: (element, idArray, vars) => {
+    vars["mainColor"] =  vars["lastUsedColor"]
+  },
+  mainColor: (element, idArray, vars) => {
+    element.setAttribute("style", "fill:" + vars["mainColor"])
+  },
+  isSecondaryColor: (element, idArray, vars) => {
+    vars["secondaryColor"] =  vars["lastUsedColor"]
+  },
+  secondaryColor: (element, idArray, vars) => {
+    element.setAttribute("style", "fill:" + vars["isSecondaryColor"])
+  },
+  lastUsedColor: (element, idArray, vars) => {
+    element.setAttribute("style", "fill:" + vars["lastUsedColor"])
+  },
   colorMaxContrast:  (element, idArray, vars) => {
-    for (let index = 0; index < 30; index++) {
+    const newColor = randomColorWithContrast(1.3, vars["lastUsedColor"], vars["colorPalette"])
+    element.setAttribute("style", "fill:" + newColor)
+    vars["lastUsedColor"] = newColor
+  },
+  colorMaxContrastMain:  (element, idArray, vars) => {
+    const newColor = randomColorWithContrast(1.3, vars["mainColor"], vars["colorPalette"])
+    element.setAttribute("style", "fill:" + newColor)
+    vars["lastUsedColor"] = newColor
+  },
+  colorMaxContrastMainSecondary:  (element, idArray, vars) => {
       const pal =  vars["colorPalette"]
-      var b = pal[Math.floor((Math.random() * pal.length-1) + 1)]
-      var c = contrast.ratio(vars["mainColor"], b)
-      if (c>1.4){
-
-        element.setAttribute("style", "fill:" + b)
-        vars["secondaryColor"] = b
-        break
+      const posColors = []
+      for (let index = 0; index < pal.length; index++) {
+        var b = pal[index]
+        var c = contrast.ratio(vars["secondaryColor"], b)
+        var e = contrast.ratio(vars["mainColor"], b)
+        if (c>1.3 && e>1.3){
+          posColors.push(b)
+        }
       }
-    }
+      const random = Math.floor((Math.random() * posColors.length-1) + 1)
+      const newColor = posColors[random]
+      element.setAttribute("style", "fill:" + newColor)
+      vars["lastUsedColor"] = newColor
   },
-  colorMaxContrastSecondary:  (element, idArray, vars) => {
-    for (let index = 0; index < 30; index++) {
-      const pal =  vars["colorPalette"]
-      var b = pal[Math.floor((Math.random() * pal.length-1) + 1)]
-      var c = contrast.ratio(vars["secondaryColor"], b)
-      var e = contrast.ratio(vars["mainColor"], b)
-      if (c>2 && e>1.4){
+}
 
-        element.setAttribute("style", "fill:" + b)
-        break
-      }
+const randomColorWithContrast= (contastRatio, contrastColor, palette) => {
+  const pal =  palette
+  const posColors = []
+  for (let index = 0; index < pal.length; index++) {
+    var b = pal[index]
+    var c = contrast.ratio(contrastColor, b)
+    if (c>1.3){
+      posColors.push(b)
     }
-  },
-  palleteColorMaxContrast:  (element, idArray, vars) => {
-    const pal =  vars["colorPalette"]
-    const maxColors = []
-   
-    for (let index = 0; index < pal.length; index++) {
-      var c = contrast.ratio(vars["mainColor"], pal[index])
-      if (c>3){
-        maxColors.push(pal[index])
-      }
-    }
-
-    if (!vars["colorPaletteUsed"] || vars["colorPaletteUsed"].length >= maxColors.length){
-      vars["colorPaletteUsed"] = []
-    }
-
-    for (let index = 0; index < maxColors.length; index++) {
-      if (!vars["colorPaletteUsed"].includes(maxColors[index])){
-        vars["colorPaletteUsed"].push(maxColors[index])
-        element.setAttribute("style", "fill:" + maxColors[index])
-        break
-      }
-    }
-  },
-  randomFillBlueColors: (element, idArray, vars) => {
-    element.setAttribute("style", "fill:" + randomcolor({
-      luminosity: 'light',
-      hue: 'blue'
-   }))
-  },
-  addText: (element, idArray, vars) => {
-    element.textContent = randomcolor()
-    element.setAttribute("style", "fill:red")
-  },
+  }
+  const random = Math.floor((Math.random() * posColors.length-1) + 1)
+  return posColors[random]
 }
 
 export {

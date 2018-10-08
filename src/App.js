@@ -18,6 +18,7 @@ class App extends Component {
   }
 
   onImageChange = (files) => {
+    this.setState({ files: [] })
     const callback = this.onLoaderfinished(files.length, 1,  [])
     const parser = new DOMParser()
     for (var i = 0; i < files.length; i++) { //for multiple files          
@@ -27,7 +28,7 @@ class App extends Component {
           const doc = parser.parseFromString(e.target.result, "image/svg+xml")
           const imgArray = []
           const processvars = getVarsFromSVG(doc.documentElement)
-          for (let index = 0; index <= 3; index++) {
+          for (let index = 0; index <= 10; index++) {
             imgArray.push(processSVG(doc.documentElement.cloneNode(true), processvars))
           }
 
