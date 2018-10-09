@@ -5,6 +5,7 @@ const processFunctions = {
     const pal =  vars["colorPalette"]
     var random = Math.floor((Math.random() * pal.length-1) + 1)
     while (vars["lastUsedColor"] === pal[random] && pal.length>1) {
+      console.log(vars["lastUsedColor"], pal[random])
       random = Math.floor((Math.random() * pal.length-1) + 1)
     }
     vars["lastUsedColor"] = pal[random]
@@ -14,13 +15,24 @@ const processFunctions = {
     vars["mainColor"] =  vars["lastUsedColor"]
   },
   mainColor: (element, idArray, vars) => {
+    vars["lastUsedColor"] = vars["mainColor"]
     element.setAttribute("style", "fill:" + vars["mainColor"])
   },
   isSecondaryColor: (element, idArray, vars) => {
     vars["secondaryColor"] =  vars["lastUsedColor"]
   },
+  uniqueColor: (element, idArray, vars) => {
+    const pal =  vars["colorPalette"]
+    var random = Math.floor((Math.random() * pal.length-1) + 1)
+    while ((vars["mainColor"] === pal[random] || vars["secondaryColor"] === pal[random]) && pal.length>2) {
+      random = Math.floor((Math.random() * pal.length-1) + 1)
+    }
+    vars["lastUsedColor"] = pal[random]
+    element.setAttribute("style", "fill:" + pal[random])
+  },
   secondaryColor: (element, idArray, vars) => {
-    element.setAttribute("style", "fill:" + vars["isSecondaryColor"])
+    vars["lastUsedColor"] = vars["secondaryColor"]
+    element.setAttribute("style", "fill:" + vars["secondaryColor"])
   },
   lastUsedColor: (element, idArray, vars) => {
     element.setAttribute("style", "fill:" + vars["lastUsedColor"])
@@ -31,7 +43,7 @@ const processFunctions = {
     vars["lastUsedColor"] = newColor
   },
   colorMaxContrastMain:  (element, idArray, vars) => {
-    const newColor = randomColorWithContrast(1.3, vars["mainColor"], vars["colorPalette"])
+    const newColor = randomColorWithContrast(1.2, vars["mainColor"], vars["colorPalette"])
     element.setAttribute("style", "fill:" + newColor)
     vars["lastUsedColor"] = newColor
   },
@@ -42,7 +54,7 @@ const processFunctions = {
         var b = pal[index]
         var c = contrast.ratio(vars["secondaryColor"], b)
         var e = contrast.ratio(vars["mainColor"], b)
-        if (c>1.3 && e>1.3){
+        if (c>1.2 && e>1.2){
           posColors.push(b)
         }
       }
