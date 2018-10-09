@@ -35,8 +35,13 @@ const processFunctions = {
     }
     console.log(breakCounter)
     let newColor = pal[random]
-    if (breakCounter>=20){
-      newColor = pal[Math.floor((Math.random() * pal.length-1) + 1)]
+    if (breakCounter>=pal.length*3){
+      const pal =  vars["colorPalette"]
+      var random = Math.floor((Math.random() * pal.length-1) + 1)
+      while ((vars["lastUsedColors"].includes(pal[random]))) {
+        random = Math.floor((Math.random() * pal.length-1) + 1)
+      }
+      newColor = pal[random]
     }
     vars["lastUsedColors"].push(newColor)
     element.setAttribute("style", "fill:" + newColor)
