@@ -13,7 +13,7 @@ Create random svg images based on variables set as id's in the svg's
 ## License
 Readable is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-##possible tags in ID 
+## Possible tags in ID 
 ### SVG ID
 - colorPalette: get a random palette from the colorpalettes
 - randomPaletteColor: gets random color from palette
