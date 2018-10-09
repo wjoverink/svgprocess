@@ -22,13 +22,24 @@ const processFunctions = {
       vars["lastUsedColors"].length = 0
     }
     var random = Math.floor((Math.random() * pal.length-1) + 1)
-    while (vars["lastUsedColors"].includes(pal[random]) && 
+    let breakCounter = 0
+    let lastColor = vars["lastUsedColors"][lastUColorlength-1] || "#FFFFFF"
+    console.log(vars["lastUsedColors"].includes(pal[random]))
+    while ((vars["lastUsedColors"].includes(pal[random]) || 
+      (contrast.ratio(lastColor, pal[random]) < 1.3)) &&
       pal.length>1 && 
+      breakCounter < 20 &&
       lastUColorlength<pal.length) {
         random = Math.floor((Math.random() * pal.length-1) + 1)
+        breakCounter++
     }
-    vars["lastUsedColors"].push(pal[random])
-    element.setAttribute("style", "fill:" + pal[random])
+    console.log(breakCounter)
+    let newColor = pal[random]
+    if (breakCounter>=20){
+      newColor = pal[Math.floor((Math.random() * pal.length-1) + 1)]
+    }
+    vars["lastUsedColors"].push(newColor)
+    element.setAttribute("style", "fill:" + newColor)
   },
   isMainColor: (element, idArray, vars) => {
     vars["mainColor"] =  vars["lastUsedColor"]
