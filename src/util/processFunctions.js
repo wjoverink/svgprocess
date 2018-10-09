@@ -28,7 +28,7 @@ const processFunctions = {
     while ((vars["lastUsedColors"].includes(pal[random]) || 
       (contrast.ratio(lastColor, pal[random]) < 1.3)) &&
       pal.length>1 && 
-      breakCounter < 20 &&
+      breakCounter < pal.length*3 &&
       lastUColorlength<pal.length) {
         random = Math.floor((Math.random() * pal.length-1) + 1)
         breakCounter++
