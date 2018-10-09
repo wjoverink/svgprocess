@@ -5,10 +5,29 @@ const processFunctions = {
     const pal =  vars["colorPalette"]
     var random = Math.floor((Math.random() * pal.length-1) + 1)
     while (vars["lastUsedColor"] === pal[random] && pal.length>1) {
-      console.log(vars["lastUsedColor"], pal[random])
       random = Math.floor((Math.random() * pal.length-1) + 1)
     }
     vars["lastUsedColor"] = pal[random]
+    element.setAttribute("style", "fill:" + pal[random])
+  },
+  palleteColorNotUsed:  (element, idArray, vars) => {
+    const pal =  vars["colorPalette"]
+    
+    if (!vars["lastUsedColors"]){
+      vars["lastUsedColors"]=[]
+    }
+    
+    const lastUColorlength= vars["lastUsedColors"].length
+    if (lastUColorlength===pal.length){
+      vars["lastUsedColors"].length = 0
+    }
+    var random = Math.floor((Math.random() * pal.length-1) + 1)
+    while (vars["lastUsedColors"].includes(pal[random]) && 
+      pal.length>1 && 
+      lastUColorlength<pal.length) {
+        random = Math.floor((Math.random() * pal.length-1) + 1)
+    }
+    vars["lastUsedColors"].push(pal[random])
     element.setAttribute("style", "fill:" + pal[random])
   },
   isMainColor: (element, idArray, vars) => {

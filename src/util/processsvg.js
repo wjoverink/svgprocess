@@ -46,5 +46,6 @@ const getVarsFromSVG = (svg) => {
 
 export {
   processSVG,
-  getVarsFromSVG
+  getVarsFromSVG,
+  recursivelyGetChildNodes
 }
