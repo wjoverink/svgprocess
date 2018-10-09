@@ -30,8 +30,8 @@ class App extends Component {
         reader.onload = function (e) {
           const doc = parser.parseFromString(e.target.result, "image/svg+xml")
           const imgArray = []
-          const processvars = getVarsFromSVG(doc.documentElement)
           for (let index = 0; index <= totalImages; index++) {
+            const processvars = getVarsFromSVG(doc.documentElement)
             imgArray.push(processSVG(doc.documentElement.cloneNode(true), processvars))
           }
 

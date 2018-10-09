@@ -59,7 +59,7 @@ const randomColorWithContrast= (contastRatio, contrastColor, palette) => {
   for (let index = 0; index < pal.length; index++) {
     var b = pal[index]
     var c = contrast.ratio(contrastColor, b)
-    if (c>1.3){
+    if (c>contastRatio){
       posColors.push(b)
     }
   }

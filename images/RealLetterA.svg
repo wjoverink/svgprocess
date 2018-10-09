@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="mainColor:randomColor;colorPalette:colorPalette" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="colorPalette:colorPalette;mainColor:randomPaletteColor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 1708 1024" style="enable-background:new 0 0 1708 1024;" xml:space="preserve">
 <style type="text/css">
         .st0{fill:#808080;}
         .st1{fill:#898A8A;}
         .st2{fill:#FFFFFF;}
 </style>
-<rect id="palleteColor;isMainColor" class="st0" width="1708" height="1024"/>
-<polygon id="palleteColor;isSecondaryColor" class="st1" points="910.2,248 1691.1,1034 843.5,1034 586.6,775.8 "/>
+<rect id="colorMaxContrastMain;isSecondaryColor" class="st0" width="1708" height="1024"/>
+<polygon id="colorMaxContrastMainSecondary" class="st1" points="910.2,248 1691.1,1034 843.5,1034 586.6,775.8 "/>
 <g>
-        <path class="st2" id="colorMaxContrastMainSecondary" d="M952.5,676.1H753.3l-40.3,99.6H586.4l212.7-527.4h111.5l208,527.4H992.1L952.5,676.1z M919.3,582.8
+        <path class="st2" id="mainColor" d="M952.5,676.1H753.3l-40.3,99.6H586.4l212.7-527.4h111.5l208,527.4H992.1L952.5,676.1z M919.3,582.8
                 l-64.8-177.1l-65.6,177.1H919.3z"/>
 </g>
 </svg>

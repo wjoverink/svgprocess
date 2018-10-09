@@ -1,25 +1,24 @@
-import randomcolor from 'randomcolor'
+import palettes from '../colorPalette/colorPalettes'
 
 const processVars = {
-  randomColor: (name, idArray) => {
-    return randomcolor()
+  colorPalette: (name, idArray, vars) => {
+    var p = palettes
+    const random = Math.floor((Math.random() * p.palettes.length-1) + 1)
+    const palette = p.palettes[random].palette
+    const withHash = palette.reduce((total, currentValue, currentIndex, arr) => {
+        if (currentValue.indexOf("#") === 0){
+          total.push(currentValue)
+        } else {
+          total.push("#"+currentValue)
+        }
+        return total
+    }, [])
+    return withHash
   },
-  colorPalette: (name, idArray) => {
-    // return [...randomcolor({
-    //   count: 20,
-    //   hue: 'blue',
-    //   // luminosity: 'dark',
-    // })]
-    return [
-      "#D72C52",
-      "#AE5324",
-      "#D7A82C",
-      "#E7FF34",
-      "#1F9826",
-      "#2CBFD7",
-      "#3B34FF",
-      "#C534FF"
-    ]
+  randomPaletteColor: (name, idArray, vars) => {
+    var p = vars["colorPalette"]
+    const random = Math.floor((Math.random() * p.length-1) + 1)
+    return p[random]
   },
 }
 
