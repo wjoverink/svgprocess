@@ -151,7 +151,8 @@ class App extends Component {
 const styles = StyleSheet.create({
   progress: {
     marginLeft: 'auto',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    overflow: 'hidden'
   },
   labelOriginals: {
     color: 'rgba(0, 0, 0, 0.87)',
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
   },
   imageSmall: {
     width: 50,
-    height: 'auto',
+    height: 50,
     margin: 0,
     marginLeft: 15
   },

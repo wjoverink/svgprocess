@@ -8,11 +8,13 @@ class ImagePreview extends Component {
   myRef = React.createRef()
   
   componentDidUpdate(){
+    this.myRef.current.innerHTML = "";
     if (this.props.image){
       this.myRef.current.appendChild(this.props.image)
     }
   }
   componentDidMount(){
+    this.myRef.current.innerHTML = "";
     if (this.props.image){
       this.myRef.current.appendChild(this.props.image)
     }

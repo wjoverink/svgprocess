@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'relative',
     flexWrap: 'wrap',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    overflow: 'hidden'
   },
   labelClass:{
 
