@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 400,
-    height: 400,
+    height: 'auto',
     margin: 20
   },
   imageSmall: {
