@@ -114,9 +114,6 @@ class App extends Component {
     console.log("completed", completed)
     return (
       <div className={css(styles.mainWrapper)}>
-        {/* <header className="App-header">
-          Process-svg
-        </header> */}
         <div className={css(styles.cWrapper, styles.controlsWrapper)}>
           <FileUpload onChange={this.onImageChange} />
           <Button onClick={this.handleClick} style={{marginRight: 6}} variant="outlined" color="secondary">
@@ -146,6 +143,9 @@ class App extends Component {
             {!showAdv && (<Settings />)}
             {showAdv && (<KeyboardArrowLeft />)}
           </IconButton>
+          <header className={css(styles.labelOriginals, styles.header)}>
+            Process-SVG
+          </header>
           <ImagesPreview 
             label={'Originals'} 
             className={styles.progress} 
@@ -170,8 +170,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     overflow: 'hidden'
   },
+  header:{
+    fontSize: 30,
+    position: 'absolute',
+    left: 'calc(50% - 177px)'
+  },
   labelOriginals: {
-    color: 'rgba(0, 0, 0, 0.87)',
+    color:' #f50057',
     fontSize: '0.875rem',
     fontWeight: 400,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -199,7 +204,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginTop: 10,
     marginBottom: 20,
-    height:50
+    height:50,
+    position: 'relative'
   },
   image: {
     width: 400,
