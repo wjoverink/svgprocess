@@ -1,7 +1,7 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import FileUpload from './components/FileUpload/FileUpload'
-import ImagePreview from './components/ImagePreview/ImagePreview'
+import ImagesPreview from './components/ImagesPreview/ImagesPreview'
 import { processSVG, getVarsFromSVG, autoProcessSVG } from './util/processsvg'
 import TextField from '@material-ui/core/TextField'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { isNumber, isEmpty } from 'lodash'
 import Autorenew from '@material-ui/icons/Autorenew'
 import Button from '@material-ui/core/Button'
-import LinearProgress from '@material-ui/core/LinearProgress'
+// import LinearProgress from '@material-ui/core/LinearProgress'
 
 class App extends Component {
   state = {
@@ -18,33 +18,34 @@ class App extends Component {
     autoRender: true,
     isLoading: false,
     completed: 0,
+    svgs: [],
+    originals: []
   }
-  svgs = []
   changeTimeout = undefined
 
   onLoaderfinished = (total, doneCallBack) => {
-    this.svgs.length = 0
+    const svgs = []
     return (svg) => {
-      this.svgs.push(svg)
-      if (total === this.svgs.length) {
-        doneCallBack.call(this)
+      svgs.push(svg)
+      if (total === svgs.length) {
+        this.setState({ svgs, originals: svgs.map((item)=> item.documentElement.cloneNode(true) )}, () => doneCallBack.call(this))   
       }
     }
   }
 
   processDocs = () => {
-    const { numberOfImages, autoRender } = this.state
-    const imgArray = []
+    const { numberOfImages, autoRender, svgs } = this.state
+    const images = []
     // const total = this.svgs.length * numberOfImages
     // const onePerc = (total/100)
     // const perc =  20 / onePerc
-    for (let j = 0; j < this.svgs.length; j++) {
-      const doc = this.svgs[j]
+    for (let j = 0; j < svgs.length; j++) {
+      const doc = svgs[j]
       for (let index = 0; index < numberOfImages; index++) {
         if (!autoRender) {
-          imgArray.push(processSVG(doc.documentElement.cloneNode(true), getVarsFromSVG(doc.documentElement)))
+          images.push(processSVG(doc.documentElement.cloneNode(true), getVarsFromSVG(doc.documentElement)))
         } else {
-          imgArray.push(autoProcessSVG(doc.documentElement.cloneNode(true)))
+          images.push(autoProcessSVG(doc.documentElement.cloneNode(true)))
         }
         // if (index%20 === 0){
         //   this.setState({ completed: Math.round(this.state.completed + perc) })
@@ -52,7 +53,7 @@ class App extends Component {
       }
      // this.setState({ completed: Math.round(numberOfImages / onePerc) })
     }
-    this.setState({ images: imgArray, isLoading: false, completed:0 })
+    this.setState({ images, isLoading: false, completed:0 })
   }
 
   onImageChange = (files) => {
@@ -99,7 +100,7 @@ class App extends Component {
   }
 
   render() {
-    const { images, isLoading, completed } = this.state
+    const { images, isLoading, completed, originals } = this.state
     console.log("completed", completed)
     return (
       <div className={css(styles.mainWrapper)}>
@@ -129,18 +130,19 @@ class App extends Component {
             }
             label="Auto generate"
           />
+          <ImagesPreview 
+            label={'Originals'} 
+            className={styles.progress} 
+            images={originals} 
+            labelClass={styles.labelOriginals}
+            imageClass={styles.imageSmall} />
         </div>
         {/* <LinearProgress 
         variant="determinate" 
         value={completed} 
         className={css(styles.progress)} 
         color="secondary" /> */}
-
-        <div className={css(styles.wrapper)}>
-          {images.map((item, index) => (
-            <ImagePreview className={css(styles.image)} key={"image" + index} image={item} />
-          ))}
-        </div>
+        <ImagesPreview className={styles.imgsWrapper} images={images} imageClass={styles.image} />
       </div>
     )
   }
@@ -148,7 +150,18 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   progress: {
-   
+    marginLeft: 'auto',
+    alignItems: 'flex-end'
+  },
+  labelOriginals: {
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontSize: '0.875rem',
+    fontWeight: 400,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    lineHeight: '1.46429em'
+  },
+  imgsWrapper: {
+    borderTop: '1px solid rgba(225, 0, 80, 0.5)'
   },
   mainWrapper: {
     display: 'flex',
@@ -161,25 +174,23 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 0,
     paddingLeft: 10,
+    marginTop: 10,
     marginBottom: 20,
     ':nth-child(1n)>*': {
       marginRight: 20,
       display: 'flex'
     },
   },
-  wrapper: {
-    flex: 1,
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'row',
-    position: 'relative',
-    flexWrap: 'wrap',
-    borderTop: '1px solid rgba(225, 0, 80, 0.5)'
-  },
   image: {
     width: 400,
     height: 400,
     margin: 20
+  },
+  imageSmall: {
+    width: 50,
+    height: 'auto',
+    margin: 0,
+    marginLeft: 15
   },
   formControlLabel: {
     paddingTop:0,

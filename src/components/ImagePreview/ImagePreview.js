@@ -17,6 +17,10 @@ class ImagePreview extends Component {
       this.myRef.current.appendChild(this.props.image)
     }
   }
+  componentWillUnmount(){
+    this.myRef.current.innerHTML = "";
+  }
+
   render() {
     const {image, ...other} = this.props
     
