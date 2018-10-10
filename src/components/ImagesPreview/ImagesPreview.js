@@ -33,7 +33,6 @@ class ImagesPreview extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
-    overflow: 'auto',
     flexDirection: 'row',
     position: 'relative',
     flexWrap: 'wrap',

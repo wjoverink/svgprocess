@@ -8,7 +8,10 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { isNumber, isEmpty } from 'lodash'
 import Autorenew from '@material-ui/icons/Autorenew'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import Settings from '@material-ui/icons/Settings'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
 // import LinearProgress from '@material-ui/core/LinearProgress'
 
 class App extends Component {
@@ -19,6 +22,7 @@ class App extends Component {
     isLoading: false,
     completed: 0,
     svgs: [],
+    showAdv: false,
     originals: []
   }
   changeTimeout = undefined
@@ -99,37 +103,49 @@ class App extends Component {
     }, this.processDocs)
   }
 
+  handleClickAdv = event => {
+    this.setState({
+      showAdv: !this.state.showAdv
+    })
+  }
+
   render() {
-    const { images, isLoading, completed, originals } = this.state
+    const { images, isLoading, completed, originals, showAdv } = this.state
     console.log("completed", completed)
     return (
       <div className={css(styles.mainWrapper)}>
         {/* <header className="App-header">
           Process-svg
         </header> */}
-        <div className={css(styles.controlsWrapper)}>
+        <div className={css(styles.cWrapper, styles.controlsWrapper)}>
           <FileUpload onChange={this.onImageChange} />
-          <Button onClick={this.handleClick} variant="outlined" color="secondary">
+          <Button onClick={this.handleClick} style={{marginRight: 6}} variant="outlined" color="secondary">
             Refresh
             <Autorenew style={{marginLeft:8}} />
           </Button>
-          <TextField
-            color="secondary"
-            style={{ width: 120 }}
-            label="images per SVG"
-            value={this.state.numberOfImages}
-            onChange={this.handleChange}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                classes={{root: css(styles.formControlLabel)}}
-                checked={this.state.autoRender}
-                onChange={this.handleChangeCheck}
-              />
-            }
-            label="Auto generate"
-          />
+          {showAdv && (<div  style={{marginLeft: 20, marginRight: 6}} className={css(styles.cWrapper)}>
+            <TextField
+              color="secondary"
+              style={{ width: 120 }}
+              label="images per SVG"
+              value={this.state.numberOfImages}
+              onChange={this.handleChange}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  classes={{root: css(styles.formControlLabel)}}
+                  checked={this.state.autoRender}
+                  onChange={this.handleChangeCheck}
+                />
+              }
+              label="Auto generate"
+            />
+          </div>)}
+          <IconButton style={{padding:'9px 12px'}}  onClick={this.handleClickAdv} color="secondary">
+            {!showAdv && (<Settings />)}
+            {showAdv && (<KeyboardArrowLeft />)}
+          </IconButton>
           <ImagesPreview 
             label={'Originals'} 
             className={styles.progress} 
@@ -168,19 +184,22 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
-  controlsWrapper: {
+  cWrapper: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-end',
+    ':nth-child(1n)>*': {
+      marginRight: 20,
+      display: 'flex'
+    },
+  },
+  controlsWrapper: {
     padding: 10,
     paddingBottom: 0,
     paddingLeft: 10,
     marginTop: 10,
     marginBottom: 20,
-    ':nth-child(1n)>*': {
-      marginRight: 20,
-      display: 'flex'
-    },
+    height:50
   },
   image: {
     width: 400,
@@ -191,7 +210,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     margin: 0,
-    marginLeft: 15
+    marginLeft: 15,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
   },
   formControlLabel: {
     paddingTop:0,
