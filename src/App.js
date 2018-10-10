@@ -72,7 +72,7 @@ class App extends Component {
   }
 
   handleChangeCheck = event => {
-    this.setState({ autoRender: event.target.checked })
+    this.setState({ autoRender: event.target.checked, images: [], isLoading:true  }, this.processDocs)
   };
 
   handleChange = event => {
