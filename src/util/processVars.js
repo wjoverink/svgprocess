@@ -1,4 +1,4 @@
-import palettes from '../colorPalette/colorPalettes.1'
+import palettes from '../colorPalette/colorPalettes'
 
 const processVars = {
   colorPalette: (name, idArray, vars) => {

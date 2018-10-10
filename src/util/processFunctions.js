@@ -21,23 +21,21 @@ const processFunctions = {
     if (lastUColorlength===pal.length){
       vars["lastUsedColors"].length = 0
     }
-    var random = Math.floor((Math.random() * pal.length-1) + 1)
+    let random = Math.floor((Math.random() * pal.length-1) + 1)
     let breakCounter = 0
     let lastColor = vars["lastUsedColors"][lastUColorlength-1] || "#FFFFFF"
-    console.log(vars["lastUsedColors"].includes(pal[random]))
     while ((vars["lastUsedColors"].includes(pal[random]) || 
-      (contrast.ratio(lastColor, pal[random]) < 1.3)) &&
+      (contrast.ratio(lastColor, pal[random]) < 1.4)) &&
       pal.length>1 && 
       breakCounter < pal.length*3 &&
       lastUColorlength<pal.length) {
         random = Math.floor((Math.random() * pal.length-1) + 1)
         breakCounter++
     }
-    console.log(breakCounter)
     let newColor = pal[random]
     if (breakCounter>=pal.length*3){
       const pal =  vars["colorPalette"]
-      var random = Math.floor((Math.random() * pal.length-1) + 1)
+      random = Math.floor((Math.random() * pal.length-1) + 1)
       while ((vars["lastUsedColors"].includes(pal[random]))) {
         random = Math.floor((Math.random() * pal.length-1) + 1)
       }

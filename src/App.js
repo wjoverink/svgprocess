@@ -2,78 +2,105 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import FileUpload from './components/FileUpload/FileUpload'
 import ImagePreview from './components/ImagePreview/ImagePreview'
-import { processSVG, getVarsFromSVG, recursivelyGetChildNodes } from './util/processsvg'
+import { processSVG, getVarsFromSVG, autoProcessSVG } from './util/processsvg'
 import TextField from '@material-ui/core/TextField'
-import { processVars } from './util/processVars'
-import { processFunctions } from './util/processFunctions'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { isNumber, isEmpty } from 'lodash'
+import Autorenew from '@material-ui/icons/Autorenew'
+import Button from '@material-ui/core/Button'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 class App extends Component {
   state = {
-    files: [],
+    images: [],
     numberOfImages: 10,
-    autoRender:true
+    autoRender: true,
+    isLoading: false,
+    completed: 0,
   }
-  onLoaderfinished = (total, count, imgList) => {
-    return (newImages) => {
-      imgList = imgList.concat(newImages)
-      if (total === count) {
-        this.setState({ files: imgList })
+  svgs = []
+  changeTimeout = undefined
+
+  onLoaderfinished = (total, doneCallBack) => {
+    this.svgs.length = 0
+    return (svg) => {
+      this.svgs.push(svg)
+      if (total === this.svgs.length) {
+        doneCallBack.call(this)
       }
-      count++
     }
   }
 
+  processDocs = () => {
+    const { numberOfImages, autoRender } = this.state
+    const imgArray = []
+    // const total = this.svgs.length * numberOfImages
+    // const onePerc = (total/100)
+    // const perc =  20 / onePerc
+    for (let j = 0; j < this.svgs.length; j++) {
+      const doc = this.svgs[j]
+      for (let index = 0; index < numberOfImages; index++) {
+        if (!autoRender) {
+          imgArray.push(processSVG(doc.documentElement.cloneNode(true), getVarsFromSVG(doc.documentElement)))
+        } else {
+          imgArray.push(autoProcessSVG(doc.documentElement.cloneNode(true)))
+        }
+        // if (index%20 === 0){
+        //   this.setState({ completed: Math.round(this.state.completed + perc) })
+        // }
+      }
+     // this.setState({ completed: Math.round(numberOfImages / onePerc) })
+    }
+    this.setState({ images: imgArray, isLoading: false, completed:0 })
+  }
+
   onImageChange = (files) => {
-    this.setState({ files: [] })
-    const totalImages = this.state.numberOfImages
-    const autoRender = this.state.autoRender
-    const callback = this.onLoaderfinished(files.length, 1,  [])
+    this.setState({ images: [], isLoading: true })
+    const doneCallBack = this.processDocs
+    const callback = this.onLoaderfinished(files.length, doneCallBack)
     const parser = new DOMParser()
     for (var i = 0; i < files.length; i++) { //for multiple files          
       (function (file) {
-        var reader = new FileReader();
+        var reader = new FileReader()
         reader.onload = (e) => {
-          const doc = parser.parseFromString(e.target.result, "image/svg+xml")
-          const imgArray = []
-          for (let index = 0; index <= totalImages; index++) {
-            if (!autoRender){
-              const pVars = getVarsFromSVG(doc.documentElement)
-              imgArray.push(processSVG(doc.documentElement.cloneNode(true), pVars))
-            } else {
-              const pVars = []
-              pVars["colorPalette"] = processVars.colorPalette()
-              imgArray.push(doc.documentElement.cloneNode(true))
-              const children = recursivelyGetChildNodes(imgArray[imgArray.length-1])
-              for (let j = 0; j < children.length; j++) {
-                const element = children[j];
-                if (element.setAttribute){
-                  processFunctions["palleteColorNotUsed"](element, [], pVars)
-                }
-              } 
-            }
-          }
-
-          callback(imgArray)
+          callback(parser.parseFromString(e.target.result, "image/svg+xml"))
         }
-        reader.readAsText(file, "UTF-8");
-      })(files[i]);
+        reader.readAsText(file, "UTF-8")
+      })(files[i])
     }
   }
 
   handleChangeCheck = event => {
-    this.setState({autoRender: event.target.checked});
+    this.setState({ autoRender: event.target.checked })
   };
 
   handleChange = event => {
+    clearTimeout(this.changeTimeout)
+
+    let imgCount = isEmpty(event.target.value) ? 0 : parseInt(event.target.value)
+    imgCount = isNumber(imgCount) ? imgCount : 0
+    
     this.setState({
-      numberOfImages: parseInt(event.target.value),
-    });
-  };
+      numberOfImages: imgCount,
+      images: [] ,
+      isLoading: imgCount > 0 ? true : false
+    })
+
+    this.changeTimeout = setTimeout(this.processDocs, 300);
+    
+  }
+
+  handleClick = event => {
+    this.setState({
+      images: [] ,
+      isLoading: true
+    }, this.processDocs)
+  }
 
   render() {
-    const { files } = this.state
+    const { images, isLoading, completed } = this.state
+    console.log("completed", completed)
     return (
       <div className={css(styles.mainWrapper)}>
         {/* <header className="App-header">
@@ -81,24 +108,36 @@ class App extends Component {
         </header> */}
         <div className={css(styles.controlsWrapper)}>
           <FileUpload onChange={this.onImageChange} />
+          <Button onClick={this.handleClick} variant="outlined" color="secondary">
+            Refresh
+            <Autorenew style={{marginLeft:8}} />
+          </Button>
           <TextField
-            // disabled={this.state.autoRender}
+            color="secondary"
+            style={{ width: 120 }}
             label="images per SVG"
             value={this.state.numberOfImages}
             onChange={this.handleChange}
           />
-         <FormControlLabel
-          control={
-            <Checkbox
-              checked={this.state.autoRender}
-              onChange={this.handleChangeCheck}
-            />
-          }
-          label="Auto"
-        />
+          <FormControlLabel
+            control={
+              <Checkbox
+                classes={{root: css(styles.formControlLabel)}}
+                checked={this.state.autoRender}
+                onChange={this.handleChangeCheck}
+              />
+            }
+            label="Auto generate"
+          />
         </div>
+        {/* <LinearProgress 
+        variant="determinate" 
+        value={completed} 
+        className={css(styles.progress)} 
+        color="secondary" /> */}
+
         <div className={css(styles.wrapper)}>
-          {files.map((item, index) => (
+          {images.map((item, index) => (
             <ImagePreview className={css(styles.image)} key={"image" + index} image={item} />
           ))}
         </div>
@@ -108,6 +147,9 @@ class App extends Component {
 }
 
 const styles = StyleSheet.create({
+  progress: {
+   
+  },
   mainWrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -115,7 +157,15 @@ const styles = StyleSheet.create({
   controlsWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    padding: 10,
+    paddingBottom: 0,
+    paddingLeft: 10,
+    marginBottom: 20,
+    ':nth-child(1n)>*': {
+      marginRight: 20,
+      display: 'flex'
+    },
   },
   wrapper: {
     flex: 1,
@@ -124,13 +174,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'relative',
     flexWrap: 'wrap',
-    borderTop: '1px solid gray',
-    marginTop: 20
+    borderTop: '1px solid rgba(225, 0, 80, 0.5)'
   },
   image: {
     width: 400,
     height: 400,
     margin: 20
+  },
+  formControlLabel: {
+    paddingTop:0,
+    paddingBottom:0
   }
 })
 
