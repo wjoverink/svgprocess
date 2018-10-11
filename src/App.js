@@ -30,7 +30,7 @@ class App extends Component {
     return (svg) => {
       svgs.push(svg)
       if (total === svgs.length) {
-        this.setState({ svgs, originals: svgs.map((item)=> item.documentElement.cloneNode(true) )}, () => doneCallBack.call(this))   
+        this.setState({ svgs, originals: svgs.map((item)=>{ return {image:item.documentElement.cloneNode(true)}} )}, () => doneCallBack.call(this))   
       }
     }
   }
@@ -42,9 +42,10 @@ class App extends Component {
       const doc = svgs[j]
       for (let index = 0; index < numberOfImages; index++) {
           const vars = getVarsFromSVG(doc.documentElement)
-          vars['colorPalette'] = this.state.palettes[Math.floor((Math.random() * this.state.palettes.length-1) + 1)].palette
-          vars['mainColor'] = vars['colorPalette'][0]
-          images.push(processSVG(doc.documentElement.cloneNode(true),vars))
+          const p = this.state.palettes[Math.floor((Math.random() * this.state.palettes.length-1) + 1)]          
+          vars['colorPalette'] = p.palette
+          vars['mainColor'] =  p.palette[0]
+          images.push({palette:p, image:processSVG(doc.documentElement.cloneNode(true),vars)})
       }
     }
     this.setState({ images, isLoading: false, completed:0 })
@@ -208,9 +209,9 @@ const styles = StyleSheet.create({
     borderBottom: '1px solid rgba(225, 0, 80, 0.5)'
   },
   image: {
-    width: 400,
+    width: 300,
     height: 'auto',
-    margin: 20
+    margin: 10
   },
   imageSmall: {
     width: 50,

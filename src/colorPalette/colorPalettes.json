@@ -55,11 +55,11 @@
           "color": "#eebaff",
           "palettes": [
             {
-              "palette": ["#eebaff","#d98cf2","#c562e6","#b23cd9"],
+              "palette": ["#eebaff","#d98cf2","#c562e6","#b23cd9","#a782b3"],
               "name": "Monochomatic"
             },
             {
-              "palette": ["#eebaff","#D3BFFF","#FFB7D8","#D3BFFF"],
+              "palette": ["#eebaff","#D3BFFF","#FFB7D8","#bfd6ff","#bfffe8"],
               "name": "Analogous"
             }
           ]

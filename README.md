@@ -22,15 +22,16 @@ example:  <svg id="colorPalette:colorPalette;mainColor:randomPaletteColor"
 the variable colorPalette has now a random color palette and the variable mainColor is a random palette color
 
 ### Element ID
+- dontTouch:element isnt allowed to change
 - palleteColor: random color from palette
-- isMainColor: set the last used color as main color
 - mainColor: use main color
-- isSecondaryColor:  set the last used color as secondary color
 - secondaryColor: use secondary color
 - lastUsedColor: use last used color
-- colorMaxContrast: get color from palette with a higher contrast difference from last used color
-- colorMaxContrastMain:  get color from palette with a higher contrast difference from main color
-- colorMaxContrastMainSecondary: get color from palette with a higher contrast difference from main color and Secondary color
+- colorContrast: get color from palette with a higher contrast difference from last used color
+- colorContrastMain:  get color from palette with a higher contrast difference from main color
+- colorContrastMainSecondary: get color from palette with a higher contrast difference from main color and Secondary 
+color
+- isSecondaryColor:  set the last used color as secondary color
 
 example: <rect id="colorMaxContrastMain;isSecondaryColor" 
 sets a color with a higher contrast difference from main color and make it the secondary color

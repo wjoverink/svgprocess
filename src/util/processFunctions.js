@@ -42,7 +42,7 @@ const processFunctions = {
         newbreakcounter++
       }
       newColor = pal[random]
-      if (newbreakcounter>=pal.length*3){
+      if (newbreakcounter>=pal.length){
         newColor = "#FFFFFF"
       }
     }

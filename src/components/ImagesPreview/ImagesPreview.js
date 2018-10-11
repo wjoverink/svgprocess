@@ -21,7 +21,7 @@ class ImagesPreview extends Component {
           {label && (<span className={css(styles.wrapper, labelClass)}>{label}: </span>)}
           <div className={css(styles.wrapper)}>
             {images.map((item, index) => (
-              <ImagePreview className={css(styles.imageClass, imageClass)} key={"image" + index} image={item} />
+              <ImagePreview className={{ ...styles.imageClass, ...imageClass}} key={"image" + index} image={item} />
             ))}
               {showEmpty && images.length === 0 && (<span className={css(styles.wrapper, labelClass)}>None</span>)}
           </div>
