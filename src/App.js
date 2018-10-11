@@ -188,8 +188,9 @@ const styles = StyleSheet.create({
   },
   header:{
     fontSize: 30,
-    position: 'absolute',
-    left: 'calc(50% - 177px)'
+    // position: 'absolute',
+    // left: 'calc(50% - 177px)'
+    marginLeft: -177
   },
   labelOriginals: {
     color:' #f50057',
