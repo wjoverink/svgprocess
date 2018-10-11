@@ -1,29 +1,70 @@
 {
   "palettes": [
-    { "name":"SOFT RED", 
-      "color":"#EC644B", 
-      "palette":[ "#EC644B", "#FF856F", "#FF9E8C", "#805C55", "#806964" ], 
-      "type": "Monochomatic"},
-    { "name":"SOFT RED", 
-      "color":"#EC644B", 
-      "palette":[ "#EC644B", "#FF8A51", "#FFA751", "#806129", "#806B29" ], 
-      "type": "Analogous"},   
-    { "name":"CRIMSON", 
-      "color":"#C92228", 
-      "palette":[ "#C92228", "#FF5057", "#FF767B", "#804E50", "#806062" ], 
-      "type": "Monochomatic"},
-    { "name":"CRIMSON", 
-      "color":"#C92228", 
-      "palette":[ "#C92228", "#FF4C2B", "#FF702B", "#804A16", "#805A16" ], 
-      "type": "Analogous"},
-    { "name":"POMEGRANATE", 
-      "color":"#F22613", 
-      "palette":[ "#F22613", "#FF4E3E", "#FF7568", "#804E49", "#80615E" ], 
-      "type": "Monochomatic"},
-    { "name":"POMEGRANATE", 
-      "color":"#F22613", 
-      "palette":[ "#F22613", "#FF5014", "#FF7814", "#80500A", "#805E0A" ], 
-      "type": "Analogous"}
-  
+    {
+      "name": "Red",
+      "colors": [
+        {
+          "name": "SOFT RED",
+          "color": "#EC644B",
+          "palettes": [
+            {
+              "palette": ["#EC644B","#FF856F","#FF9E8C","#805C55","#806964"],
+              "name": "Monochomatic"
+            },
+            {
+              "palette": ["#EC644B","#FF8A51","#FFA751","#806129","#806B29"],
+              "name": "Analogous"
+            }
+          ]
+        },
+        {
+          "name": "CRIMSON",
+          "color": "#C92228",
+          "palettes": [
+            {
+              "palette": ["#C92228","#FF5057","#FF767B","#804E50","#806062"],
+              "name": "Monochomatic"
+            },
+            {
+              "palette": ["#C92228","#FF4C2B","#FF702B","#804A16","#805A16"],
+              "name": "Analogous"
+            }
+          ]
+        },
+        {
+          "name": "POMEGRANATE",
+          "color": "#F22613",
+          "palettes": [
+            {
+              "palette": ["#F22613","#FF4E3E","#FF7568","#804E49","#80615E"],
+              "name": "Monochomatic"
+            },
+            {
+              "palette": ["#F22613","#FF5014","#FF7814","#80500A","#805E0A"],
+              "name": "Analogous"
+            }
+          ]
+        }
+      ]
+    }, 
+    {
+      "name": "Purple",
+      "colors": [
+        {
+          "name": "SOFT Purple",
+          "color": "#eebaff",
+          "palettes": [
+            {
+              "palette": ["#eebaff","#d98cf2","#c562e6","#b23cd9"],
+              "name": "Monochomatic"
+            },
+            {
+              "palette": ["#eebaff","#D3BFFF","#FFB7D8","#D3BFFF"],
+              "name": "Analogous"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

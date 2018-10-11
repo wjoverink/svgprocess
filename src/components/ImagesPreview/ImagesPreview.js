@@ -8,20 +8,22 @@ class ImagesPreview extends Component {
     images: PropTypes.any,
     imageClass: PropTypes.object,
     className: PropTypes.object,
-    label: PropTypes.string
+    label: PropTypes.string,
+    showEmpty: PropTypes.bool
   }
  
 
   render() {
-    const {images, imageClass, labelClass, className, label, ...other} = this.props
+    const {images, imageClass, labelClass, className, label, showEmpty, ...other} = this.props
     
     return (
         <div className={css(styles.wrapper, className)} {...other}>
-          {label && images.length>0 && (<span className={css(styles.wrapper, labelClass)}>{label} :</span>)}
+          {label && (<span className={css(styles.wrapper, labelClass)}>{label}: </span>)}
           <div className={css(styles.wrapper)}>
-          {images.map((item, index) => (
-            <ImagePreview className={css(styles.imageClass, imageClass)} key={"image" + index} image={item} />
-          ))}
+            {images.map((item, index) => (
+              <ImagePreview className={css(styles.imageClass, imageClass)} key={"image" + index} image={item} />
+            ))}
+              {showEmpty && images.length === 0 && (<span className={css(styles.wrapper, labelClass)}>None</span>)}
           </div>
         </div>
     )

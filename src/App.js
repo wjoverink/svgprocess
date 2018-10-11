@@ -2,28 +2,26 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import FileUpload from './components/FileUpload/FileUpload'
 import ImagesPreview from './components/ImagesPreview/ImagesPreview'
-import { processSVG, getVarsFromSVG, autoProcessSVG } from './util/processsvg'
+import { processSVG, getVarsFromSVG } from './util/processsvg'
 import TextField from '@material-ui/core/TextField'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { isNumber, isEmpty } from 'lodash'
 import Autorenew from '@material-ui/icons/Autorenew'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import Settings from '@material-ui/icons/Settings'
-import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-// import LinearProgress from '@material-ui/core/LinearProgress'
+import provideScrollPosition from 'react-provide-scroll-position'
+import SettingsMenu from './components/SettingsMenu/SettingsMenu'
+import ColorLens from '@material-ui/icons/ColorLens'
+import ColorSelector from './components/ColorSelector/ColorSelector'
+import colorsJSON from './colorPalette/colorPalettes'
 
 class App extends Component {
   state = {
     images: [],
     numberOfImages: 10,
-    autoRender: true,
     isLoading: false,
     completed: 0,
     svgs: [],
-    showAdv: false,
-    originals: []
+    originals: [],
+    palettes: [],
   }
   changeTimeout = undefined
 
@@ -38,24 +36,16 @@ class App extends Component {
   }
 
   processDocs = () => {
-    const { numberOfImages, autoRender, svgs } = this.state
+    const { numberOfImages, svgs } = this.state
     const images = []
-    // const total = this.svgs.length * numberOfImages
-    // const onePerc = (total/100)
-    // const perc =  20 / onePerc
     for (let j = 0; j < svgs.length; j++) {
       const doc = svgs[j]
       for (let index = 0; index < numberOfImages; index++) {
-        if (!autoRender) {
-          images.push(processSVG(doc.documentElement.cloneNode(true), getVarsFromSVG(doc.documentElement)))
-        } else {
-          images.push(autoProcessSVG(doc.documentElement.cloneNode(true)))
-        }
-        // if (index%20 === 0){
-        //   this.setState({ completed: Math.round(this.state.completed + perc) })
-        // }
+          const vars = getVarsFromSVG(doc.documentElement)
+          vars['colorPalette'] = this.state.palettes[Math.floor((Math.random() * this.state.palettes.length-1) + 1)].palette
+          vars['mainColor'] = vars['colorPalette'][0]
+          images.push(processSVG(doc.documentElement.cloneNode(true),vars))
       }
-     // this.setState({ completed: Math.round(numberOfImages / onePerc) })
     }
     this.setState({ images, isLoading: false, completed:0 })
   }
@@ -75,10 +65,6 @@ class App extends Component {
       })(files[i])
     }
   }
-
-  handleChangeCheck = event => {
-    this.setState({ autoRender: event.target.checked, images: [], isLoading:true  }, this.processDocs)
-  };
 
   handleChange = event => {
     clearTimeout(this.changeTimeout)
@@ -103,61 +89,66 @@ class App extends Component {
     }, this.processDocs)
   }
 
-  handleClickAdv = event => {
+  handleColorSelectorChange = palettes => {
     this.setState({
-      showAdv: !this.state.showAdv
-    })
+      images: [],
+      isLoading: true,
+      palettes
+    }, this.processDocs)
+  }
+
+  componentDidMount(){
+    const palettes = []
+    colorsJSON.palettes.forEach(group => {
+      group.colors.forEach(color => {
+          color.palettes.forEach(palette => {
+            palettes.push(palette)
+          })
+      })
+    })     
+    this.setState({ palettes })
   }
 
   render() {
-    const { images, isLoading, completed, originals, showAdv } = this.state
+    const { images, completed, originals } = this.state
+    // const { scrollTop } = this.props
     console.log("completed", completed)
     return (
       <div className={css(styles.mainWrapper)}>
         <div className={css(styles.cWrapper, styles.controlsWrapper)}>
-          <FileUpload onChange={this.onImageChange} />
-          <Button onClick={this.handleClick} style={{marginRight: 6}} variant="outlined" color="secondary">
-            Refresh
-            <Autorenew style={{marginLeft:8}} />
-          </Button>
-          {showAdv && (<div  style={{marginLeft: 20, marginRight: 6}} className={css(styles.cWrapper)}>
-            <TextField
-              color="secondary"
-              style={{ width: 120 }}
-              label="images per SVG"
-              value={this.state.numberOfImages}
-              onChange={this.handleChange}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  classes={{root: css(styles.formControlLabel)}}
-                  checked={this.state.autoRender}
-                  onChange={this.handleChangeCheck}
+          <div className={css(styles.cWrapper)}>
+            <FileUpload onChange={this.onImageChange} />
+            <IconButton className={css(styles.settingsMenuIcon)} onClick={this.handleClick} color="secondary">
+              <Autorenew />
+            </IconButton>
+            <SettingsMenu 
+            classPanel={{ ...styles.cWrapper, ...styles.settingsMenu}}
+            iconClass={styles.settingsMenuIcon}>
+              <TextField
+                  color="secondary"
+                  style={{ width: 120 }}
+                  label="images per SVG"
+                  value={this.state.numberOfImages}
+                  onChange={this.handleChange}
                 />
-              }
-              label="Auto generate"
-            />
-          </div>)}
-          <IconButton style={{padding:'9px 12px'}}  onClick={this.handleClickAdv} color="secondary">
-            {!showAdv && (<Settings />)}
-            {showAdv && (<KeyboardArrowLeft />)}
-          </IconButton>
+            </SettingsMenu>
+            <SettingsMenu icon={ColorLens} className={styles.progress} iconClass={styles.settingsMenuIcon} isOpen={false}>
+              <ColorSelector colorsJSON={colorsJSON} onChange={this.handleColorSelectorChange}/>
+            </SettingsMenu>
+          </div>
           <header className={css(styles.labelOriginals, styles.header)}>
-            Process-SVG
+           {'Process SVG'}
           </header>
-          <ImagesPreview 
-            label={'Originals'} 
-            className={styles.progress} 
-            images={originals} 
-            labelClass={styles.labelOriginals}
-            imageClass={styles.imageSmall} />
+          <div className={css(styles.cWrapper)}>
+            <ImagesPreview 
+              label={'Loaded SVGs'} 
+              className={styles.progress} 
+              showEmpty={true}
+              images={originals} 
+              labelClass={styles.labelOriginals}
+              imageClass={styles.imageSmall} />
+          </div>
         </div>
-        {/* <LinearProgress 
-        variant="determinate" 
-        value={completed} 
-        className={css(styles.progress)} 
-        color="secondary" /> */}
         <ImagesPreview className={styles.imgsWrapper} images={images} imageClass={styles.image} />
       </div>
     )
@@ -183,7 +174,7 @@ const styles = StyleSheet.create({
     lineHeight: '1.46429em'
   },
   imgsWrapper: {
-    borderTop: '1px solid rgba(225, 0, 80, 0.5)'
+  
   },
   mainWrapper: {
     display: 'flex',
@@ -194,18 +185,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     ':nth-child(1n)>*': {
-      marginRight: 20,
+      marginRight: 5,
       display: 'flex'
     },
   },
+  settingsMenu: {
+    marginLeft: 20, 
+    marginRight: 6
+  },
+  settingsMenuIcon:{
+    padding:'9px 12px'
+  },
   controlsWrapper: {
     padding: 10,
-    paddingBottom: 0,
+    paddingBottom: 20,
     paddingLeft: 10,
     marginTop: 10,
     marginBottom: 20,
     height:50,
-    position: 'relative'
+    position: 'relative',
+    justifyContent:' space-between',
+    borderBottom: '1px solid rgba(225, 0, 80, 0.5)'
   },
   image: {
     width: 400,
@@ -221,11 +221,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end'
-  },
-  formControlLabel: {
-    paddingTop:0,
-    paddingBottom:0
   }
 })
 
-export default App;
+export default provideScrollPosition(App)

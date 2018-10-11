@@ -10,24 +10,16 @@ const processSVG = (svg, processvars) => {
       idArray.forEach((str) => {
         if (processFunctions[str]){
           processFunctions[str](child, idArray, processvars)
+        } else if (child.setAttribute){
+          //AUTO color
+          processFunctions["palleteColorNotUsed"](child, idArray, processvars)
         }
-
       })
+    } else if (child.setAttribute){
+      //AUTO color
+      processFunctions["palleteColorNotUsed"](child, [], processvars)
     }
   });
-  return svg
-}
-
-const autoProcessSVG = (svg, processvars) => {
-  const children = recursivelyGetChildNodes(svg)
-  const pVars = []
-  pVars["colorPalette"] = processVars.colorPalette()
-  for (let j = 0; j < children.length; j++) {
-    const element = children[j];
-    if (element.setAttribute){
-      processFunctions["palleteColorNotUsed"](element, [], pVars)
-    }
-  } 
   return svg
 }
 
@@ -59,6 +51,5 @@ const getVarsFromSVG = (svg) => {
 
 export {
   processSVG,
-  getVarsFromSVG,
-  autoProcessSVG
+  getVarsFromSVG
 }
