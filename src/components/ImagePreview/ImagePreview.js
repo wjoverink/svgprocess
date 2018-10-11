@@ -26,10 +26,10 @@ class ImagePreview extends Component {
   }
 
   render() {
-    const {className, image, ...other} = this.props
+    const {className, image, width, ...other} = this.props
     return (
         <div className={css(styles.wrapper, className)} {...other}>
-          <div className={css(className, styles.img)} ref={this.myRef}></div>
+          <div className={css(className, styles.img)} style={{width:width}} ref={this.myRef}></div>
           {image.palette && (<div className={css(styles.labelClass)}>
             <span>{image.palette.name}</span>
             <span style={{color:image.palette.palette[0]}}>{image.palette.palette[0]}</span>

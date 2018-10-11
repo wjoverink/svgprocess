@@ -16,12 +16,13 @@ import colorsJSON from './colorPalette/colorPalettes'
 class App extends Component {
   state = {
     images: [],
-    numberOfImages: 10,
+    numberOfImages: 20,
     isLoading: false,
     completed: 0,
     svgs: [],
     originals: [],
     palettes: [],
+    imagesWidth: 300
   }
   changeTimeout = undefined
 
@@ -83,6 +84,22 @@ class App extends Component {
     
   }
 
+  handleWidthChange = event => {
+    clearTimeout(this.changeTimeout)
+
+    let imgWidth = isEmpty(event.target.value) ? 0 : parseInt(event.target.value)
+    imgWidth = isNumber(imgWidth) ? imgWidth : 0
+    
+    this.setState({
+      imagesWidth: imgWidth,
+      images: [] ,
+      isLoading: true
+    })
+
+    this.changeTimeout = setTimeout(this.processDocs, 300);
+    
+  }
+
   handleClick = event => {
     this.setState({
       images: [] ,
@@ -127,10 +144,17 @@ class App extends Component {
             iconClass={styles.settingsMenuIcon}>
               <TextField
                   color="secondary"
-                  style={{ width: 120 }}
-                  label="images per SVG"
+                  style={{ width: 80 }}
+                  label="img per SVG"
                   value={this.state.numberOfImages}
                   onChange={this.handleChange}
+                />
+                <TextField
+                  color="secondary"
+                  style={{ width: 80 }}
+                  label="img width"
+                  value={this.state.imagesWidth}
+                  onChange={this.handleWidthChange}
                 />
             </SettingsMenu>
             <SettingsMenu icon={ColorLens} className={styles.progress} iconClass={styles.settingsMenuIcon} isOpen={false}>
@@ -150,7 +174,7 @@ class App extends Component {
               imageClass={styles.imageSmall} />
           </div>
         </div>
-        <ImagesPreview className={styles.imgsWrapper} images={images} imageClass={styles.image} />
+        <ImagesPreview  imgWidth={this.state.imagesWidth} className={styles.imgsWrapper} images={images} imageClass={styles.image} />
       </div>
     )
   }
@@ -209,7 +233,6 @@ const styles = StyleSheet.create({
     borderBottom: '1px solid rgba(225, 0, 80, 0.5)'
   },
   image: {
-    width: 300,
     height: 'auto',
     margin: 10
   },
