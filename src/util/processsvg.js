@@ -10,17 +10,21 @@ const processSVG = (svg, processvars) => {
       idArray.forEach((str) => {
         if (processFunctions[str]){
           processFunctions[str](child, idArray, processvars)
-        } else if (child.setAttribute){
+        } else if (canBeTarget(child)){
           //AUTO color
           processFunctions["palleteColorNotUsed"](child, idArray, processvars)
         }
       })
-    } else if (child.setAttribute){
+    } else if (canBeTarget(child)){
       //AUTO color
       processFunctions["palleteColorNotUsed"](child, [], processvars)
     }
   });
   return svg
+}
+
+const canBeTarget = (child) => {
+  return child.setAttribute && child.nodeName !== 'g' && child.nodeName !== 'style'
 }
 
 const recursivelyGetChildNodes = (svg) => {
