@@ -4,58 +4,6 @@
       "name": "Red",
       "colors": [
         {
-          "name": "CRIMSON",
-          "color": "#C92228",
-          "palettes": [
-            {
-              "palette": [
-                "#C92228",
-                "#FF5057",
-                "#FF767B",
-                "#804E50",
-                "#806062"
-              ],
-              "name": "Monochomatic"
-            },
-            {
-              "palette": [
-                "#C92228",
-                "#FF4C2B",
-                "#FF702B",
-                "#804A16",
-                "#805A16"
-              ],
-              "name": "Analogous"
-            }
-          ]
-        },
-        {
-          "name": "POMEGRANATE",
-          "color": "#F22613",
-          "palettes": [
-            {
-              "palette": [
-                "#F22613",
-                "#FF4E3E",
-                "#FF7568",
-                "#804E49",
-                "#80615E"
-              ],
-              "name": "Monochomatic"
-            },
-            {
-              "palette": [
-                "#F22613",
-                "#FF5014",
-                "#FF7814",
-                "#80500A",
-                "#805E0A"
-              ],
-              "name": "Analogous"
-            }
-          ]
-        },
-        {
           "name": "SOFT RED",
           "color": "#ec644b",
           "palettes": [

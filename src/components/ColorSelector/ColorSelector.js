@@ -11,135 +11,120 @@ class ColorSelector extends Component {
     onChange: PropTypes.func,
     colorsJSON: PropTypes.object,
   }
-
+  selectedPalettes = []
   state = {
     show: this.props.isOpen,
+
     paletteNames: [],
-    colors: [],
-    groups: this.props.colorsJSON.palettes,
     groupNames: [],
+    colorNames: [],
+
+    groups: this.props.colorsJSON.palettes,
+
     selectedPalettes: [],
+
+    selectedPaletteNames: [],
     selectedGroups: [],
     selectedTypes: [],
     selectedColors: [],
   }
 
   onChange = () => {
-    if (isFunction(this.props.onChange)){
-      this.props.onChange(this.state.selectedPalettes)
+    if (isFunction(this.props.onChange)) {
+      this.props.onChange(this.selectedPalettes)
     }
   }
 
-  handlegroups = items => {
-    let groups = filter(this.props.colorsJSON.palettes, c => items.includes(c.name) )
-    if (items.length===0){
-      groups = this.props.colorsJSON.palettes
-    }
-    const colors = []
-    const selectedPalettes = []
-    groups.forEach(group => {
-      group.colors.forEach(color => {
-        colors.push(color.name)
-        color.palettes.forEach(palette => {
-          selectedPalettes.push(palette)
-        })
-      })
-    });
-   
-    if (items.length===0){
-      this.setState({selectedGroups:[], groups, colors}, ()=>{
-        if (this.state.selectedTypes.length>0){
-          this.handlePalettes(this.state.selectedTypes)
-        } else if (this.state.selectedColors.length>0){
-          this.handleColors(this.state.selectedColors)
-        } else {
-          this.setState({ groups, colors, selectedPalettes }, this.onChange)
-        }
-      })
-    } else {
-      this.setState({ groups, colors, selectedPalettes, selectedGroups:items }, this.onChange)
-    }
-   
-  }
-
-  handleColors = items => {
+  getPalettes = () => {
+    const groups = this.props.colorsJSON.palettes
+    const groupNames = []
+    const colorNames = []
     const paletteNames = []
     const selectedPalettes = []
-    const groups = []
-    let stateGroups = this.state.groups
-    if (this.state.selectedGroups.length===0){
-      stateGroups = this.props.colorsJSON.palettes
-    }
-    stateGroups.forEach(group => {
-      group.colors.forEach(color => {
-        if (items.includes(color.name) || items.length===0){
-          groups.push(group)
-          color.palettes.forEach(palette => {
-            selectedPalettes.push(palette)
-            if (!paletteNames.includes(palette.name)){
-              paletteNames.push(palette.name)
-            }
-          })
-        }
-      })
-    })      
-    //this.props.colorsJSON.palettes
-    if (items.length===0){
-      this.setState({selectedColors:[], paletteNames}, () => {
-        if (this.state.selectedTypes.length>0){
-          this.handlePalettes(this.state.selectedTypes)
-        } else if (this.state.selectedGroups.length>0){
-          this.handlegroups(this.state.selectedGroups)
-        } else {
-          this.setState({ paletteNames, selectedPalettes, groups:this.props.colorsJSON.palettes }, this.onChange)
-        }
-      })
-    } else {
-       const newState = { selectedColors:items, paletteNames, selectedPalettes }
-      if (this.state.selectedGroups.length===0){
-        newState["groups"] = groups
-      }
-      this.setState(newState, this.onChange)
-    }
-  }
 
-  handlePalettes = (items) => {
-    const selectedPalettes = []
-    const groups = []
-    let stateGroups = this.state.groups
-    if (this.state.selectedGroups.length===0){
-      stateGroups = this.props.colorsJSON.palettes
-    }
-    stateGroups.forEach(group => {
+    groups.forEach(group => {
       group.colors.forEach(color => {
         color.palettes.forEach(palette => {
-          if (items.includes(palette.name) || items.length===0){
-            groups.push(group)
+          const incColors = this.state.selectedColors.includes(color.name)
+          const incGroups = this.state.selectedGroups.includes(group.name)
+          const incPaletteNames = this.state.selectedPaletteNames.includes(palette.name)
+          const hasSelectedColors = this.state.selectedColors.length !== 0
+          const hasSelectedGroups = this.state.selectedGroups.length !== 0
+          const hasSelectedPaletteNames = this.state.selectedPaletteNames.length !== 0
+
+          let a = false
+          let b = false
+          let c = false
+
+          if (incGroups || (!hasSelectedColors && !hasSelectedPaletteNames)
+            || (incColors && !hasSelectedPaletteNames)
+            || (incPaletteNames && !hasSelectedColors)
+            || (incColors && incPaletteNames)
+          ) {
+            if (!groupNames.includes(group.name)) {
+              groupNames.push(group.name)
+            }
+            a = true
+          }
+
+          if (incColors || (!hasSelectedGroups && !hasSelectedPaletteNames)
+            || (incGroups && !hasSelectedPaletteNames)
+            || (incPaletteNames && !hasSelectedGroups)
+            || (incGroups && incPaletteNames)
+          ) {
+            if (!colorNames.includes(color.name)) {
+              colorNames.push(color.name)
+            }
+            b = true
+          }
+
+          if (incPaletteNames || (!hasSelectedGroups && !hasSelectedColors)
+            || (incColors && !hasSelectedGroups)
+            || (incGroups && !hasSelectedColors)
+            || (incColors && incGroups)
+          ) {
+            if (!paletteNames.includes(palette.name)) {
+              paletteNames.push(palette.name)
+            }
+            c = true
+          }
+
+          if (a && b && c) {
             selectedPalettes.push(palette)
           }
         })
       })
     })
-    if (items.length===0){
-      this.setState({selectedTypes:[]}, () => {
-        if (this.state.colors.length>0){
-          this.handleColors(this.state.colors)
-        } else if (this.state.selectedGroups.length>0){
-          this.handlegroups(this.state.selectedGroups)
-        } else {
-          this.setState({ selectedPalettes, groups:this.props.colorsJSON.palettes }, this.onChange)
-        }
-      })
-    } else {
-      const newState = { selectedTypes: items, selectedPalettes }
-      if (this.state.selectedGroups.length===0){
-        newState["groups"] = groups
-      }
-      this.setState(newState, this.onChange)
+    const state = {}
+    if (this.state.groupNames.length !== groupNames.length) {
+      state["groupNames"] = groupNames
     }
+
+    if (this.state.colorNames.length !== colorNames.length) {
+      state["colorNames"] = colorNames
+    }
+
+    if (this.state.paletteNames.length !== paletteNames.length) {
+      state["paletteNames"] = paletteNames
+    }
+    this.selectedPalettes = selectedPalettes
+
+    this.setState(state, this.onChange)
   }
 
-  componentDidMount(){
+  handlegroups = items => {
+    this.setState({ selectedGroups: items }, this.getPalettes)
+  }
+
+  handleColors = items => {
+    this.setState({ selectedColors: items }, this.getPalettes)
+  }
+
+  handlePalettes = items => {
+    this.setState({ selectedPaletteNames: items }, this.getPalettes)
+  }
+
+  componentDidMount() {
     const groupNames = []
     const paletteNames = []
     const selectedPalettes = []
@@ -147,42 +132,43 @@ class ColorSelector extends Component {
     this.props.colorsJSON.palettes.forEach(group => {
       groupNames.push(group.name)
       group.colors.forEach(color => {
-          colors.push(color.name)
-          color.palettes.forEach(palette => {
-            selectedPalettes.push(palette.palette)
-            if (!paletteNames.includes(palette.name)){
-              paletteNames.push(palette.name)
-            }
-          })
+        colors.push(color.name)
+        color.palettes.forEach(palette => {
+          selectedPalettes.push(palette.palette)
+          if (!paletteNames.includes(palette.name)) {
+            paletteNames.push(palette.name)
+          }
+        })
       })
-    })     
-    this.setState({ groupNames, selectedPalettes, colors, paletteNames })
+    })
+    this.selectedPalettes = selectedPalettes
+    this.setState({ groupNames, colorNames: colors, paletteNames })
   }
 
   render() {
-    const {className} = this.props
-   
-    
+    const { className } = this.props
+
+
     return (
       <div className={css(styles.cWrapper, className)}>
-        <MultiSelectDropDown 
-          className={styles.multiSelectDropDown} 
-          helperText={'Color Group'} 
-          label={'color'} 
+        <MultiSelectDropDown
+          className={styles.multiSelectDropDown}
+          helperText={'Color Group'}
+          label={'color'}
           onChange={this.handlegroups}
-          items={this.state.groupNames}/>
-        <MultiSelectDropDown 
-          className={styles.multiSelectDropDown} 
-          helperText={'Main Color'} 
+          items={this.state.groupNames} />
+        <MultiSelectDropDown
+          className={styles.multiSelectDropDown}
+          helperText={'Main Color'}
           onChange={this.handleColors}
-          label={'color'} 
-          items={this.state.colors}/>
-        <MultiSelectDropDown 
-          className={styles.multiSelectDropDown} 
-          helperText={'Palette'} 
+          label={'color'}
+          items={this.state.colorNames} />
+        <MultiSelectDropDown
+          className={styles.multiSelectDropDown}
+          helperText={'Palette'}
           onChange={this.handlePalettes}
-          label={'palette'} 
-          items={this.state.paletteNames}/>
+          label={'palette'}
+          items={this.state.paletteNames} />
       </div>
     )
   }
@@ -192,7 +178,7 @@ const styles = StyleSheet.create({
   cWrapper: {
   },
   multiSelectDropDown: {
-    marginLeft:10
+    marginLeft: 10
   }
 })
 
