@@ -4,20 +4,21 @@ const splitOn  = ";"
 
 const processSVG = (svg, processvars) => {
   const children = recursivelyGetChildNodes(svg)
-  children.forEach((child) => { 
+  processvars["allChildren"] = children
+  children.forEach((child, index) => { 
     if (child.id){
       const idArray = child.id.split(splitOn)
       idArray.forEach((str) => {
         if (processFunctions[str]){
           processFunctions[str](child, idArray, processvars)
-        } else if (canBeTarget(child)){
+        } else { // if (canBeTarget(child)){
           //AUTO color
-          processFunctions["palleteColorNotUsed"](child, idArray, processvars)
+          processFunctions["palleteColorNotUsed"](child, idArray, processvars, index)
         }
       })
-    } else if (canBeTarget(child)){
+    } else { //if (canBeTarget(child)){
       //AUTO color
-      processFunctions["palleteColorNotUsed"](child, [], processvars)
+      processFunctions["palleteColorNotUsed"](child, [], processvars, index)
     }
   });
   return svg
@@ -30,7 +31,9 @@ const canBeTarget = (child) => {
 const recursivelyGetChildNodes = (svg) => {
   let retVal = []
   svg.childNodes.forEach((child) => { 
-    retVal.push(child)
+    if (canBeTarget(child)){
+      retVal.push(child)
+    }
     if (child.childNodes && child.childNodes.length>0){
       retVal = retVal.concat(recursivelyGetChildNodes(child))
     }

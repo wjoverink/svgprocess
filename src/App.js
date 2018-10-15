@@ -12,6 +12,8 @@ import SettingsMenu from './components/SettingsMenu/SettingsMenu'
 import ColorLens from '@material-ui/icons/ColorLens'
 import ColorSelector from './components/ColorSelector/ColorSelector'
 import colorsJSON from './colorPalette/colorPalettes'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
 class App extends Component {
   state = {
@@ -22,7 +24,8 @@ class App extends Component {
     svgs: [],
     originals: [],
     palettes: [],
-    imagesWidth: 300
+    imagesWidth: 300,
+    alwaysUseMainColor: false
   }
   changeTimeout = undefined
 
@@ -46,6 +49,8 @@ class App extends Component {
           const p = this.state.palettes[Math.floor((Math.random() * this.state.palettes.length-1) + 1)]          
           vars['colorPalette'] = p.palette
           vars['mainColor'] =  p.palette[0]
+          vars['usedColors'] = []
+          vars["alwaysUseMainColor"] = this.state.alwaysUseMainColor
           images.push({palette:p, image:processSVG(doc.documentElement.cloneNode(true),vars)})
       }
     }
@@ -107,6 +112,14 @@ class App extends Component {
     }, this.processDocs)
   }
 
+  handleCheckboxClick = event => {
+    this.setState({
+      images: [] ,
+      isLoading: true,
+      alwaysUseMainColor: event.target.checked
+    }, this.processDocs)
+  }
+
   handleColorSelectorChange = palettes => {
     this.setState({
       images: [],
@@ -155,6 +168,15 @@ class App extends Component {
                   label="img width"
                   value={this.state.imagesWidth}
                   onChange={this.handleWidthChange}
+                />
+                 <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={this.state.alwaysUseMainColor}
+                      onChange={this.handleCheckboxClick}
+                    />
+                  }
+                  label="has main color"
                 />
             </SettingsMenu>
             <SettingsMenu icon={ColorLens} className={styles.progress} iconClass={styles.settingsMenuIcon} isOpen={false}>

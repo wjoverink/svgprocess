@@ -10,21 +10,21 @@ const processFunctions = {
     vars["lastUsedColor"] = pal[random]
     element.setAttribute("style", "fill:" + pal[random])
   },
-  palleteColorNotUsed:  (element, idArray, vars) => {
+  palleteColorNotUsed:  (element, idArray, vars, index) => {
     const pal =  vars["colorPalette"]
     
-    if (!vars["lastUsedColors"]){
-      vars["lastUsedColors"]=[]
+    if (!vars["autoUsedColors"]){
+      vars["autoUsedColors"]=[]
     }
     
-    const lastUColorlength= vars["lastUsedColors"].length
+    const lastUColorlength= vars["autoUsedColors"].length
     if (lastUColorlength===pal.length){
-      vars["lastUsedColors"].length = 0
+      vars["autoUsedColors"].length = 0
     }
     let random = Math.floor((Math.random() * pal.length-1) + 1)
     let breakCounter = 0
-    let lastColor = vars["lastUsedColors"][lastUColorlength-1] || "#FFFFFF"
-    while ((vars["lastUsedColors"].includes(pal[random]) || 
+    let lastColor = vars["autoUsedColors"][lastUColorlength-1] || "#FFFFFF"
+    while ((vars["autoUsedColors"].includes(pal[random]) || 
       (contrast.ratio(lastColor, pal[random]) < 1.4)) &&
       pal.length>1 && 
       breakCounter < pal.length*3 &&
@@ -37,7 +37,7 @@ const processFunctions = {
       const pal =  vars["colorPalette"]
       random = Math.floor((Math.random() * pal.length-1) + 1)
       let newbreakcounter = 0
-      while (newbreakcounter < pal.length && (vars["lastUsedColors"].includes(pal[random]))) {
+      while (newbreakcounter < pal.length && (vars["autoUsedColors"].includes(pal[random]))) {
         random = Math.floor((Math.random() * pal.length-1) + 1)
         newbreakcounter++
       }
@@ -46,7 +46,12 @@ const processFunctions = {
         newColor = "#FFFFFF"
       }
     }
-    vars["lastUsedColors"].push(newColor)
+    vars["autoUsedColors"].push(newColor)
+    vars["usedColors"].push(newColor)
+    if (vars["allChildren"].length-1 === index && !vars["usedColors"].includes(vars["mainColor"])){
+      random = Math.floor((Math.random() * vars["allChildren"].length-1) + 1)
+      vars["allChildren"][random].setAttribute("style", "fill:" + vars["mainColor"])
+    }
     element.setAttribute("style", "fill:" + newColor)
   },
   isMainColor: (element, idArray, vars) => {
