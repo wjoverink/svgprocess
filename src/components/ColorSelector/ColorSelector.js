@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { css, StyleSheet } from 'aphrodite/no-important'
 import MultiSelectDropDown from '../MultiSelectDropDown/MultiSelectDropDown'
-import { find, filter, isFunction } from 'lodash'
+import { isFunction } from 'lodash'
 
 class ColorSelector extends Component {
   static propTypes = {
@@ -147,8 +147,11 @@ class ColorSelector extends Component {
 
   render() {
     const { className } = this.props
+    const { paletteNames, groupNames, colorNames } = this.state
 
-
+    const pNames = paletteNames.sort()
+    const gNames = groupNames.sort()
+    const cNames = colorNames.sort()
     return (
       <div className={css(styles.cWrapper, className)}>
         <MultiSelectDropDown
@@ -156,19 +159,19 @@ class ColorSelector extends Component {
           helperText={'Color Group'}
           label={'color'}
           onChange={this.handlegroups}
-          items={this.state.groupNames} />
+          items={gNames} />
         <MultiSelectDropDown
           className={styles.multiSelectDropDown}
           helperText={'Main Color'}
           onChange={this.handleColors}
           label={'color'}
-          items={this.state.colorNames} />
+          items={cNames} />
         <MultiSelectDropDown
           className={styles.multiSelectDropDown}
           helperText={'Palette'}
           onChange={this.handlePalettes}
           label={'palette'}
-          items={this.state.paletteNames} />
+          items={pNames} />
       </div>
     )
   }
