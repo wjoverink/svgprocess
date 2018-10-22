@@ -152,6 +152,7 @@ class ColorSelector extends Component {
     const pNames = paletteNames.sort()
     const gNames = groupNames.sort()
     const cNames = colorNames.sort()
+    
     return (
       <div className={css(styles.cWrapper, className)}>
         <MultiSelectDropDown

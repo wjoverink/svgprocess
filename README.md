@@ -14,12 +14,6 @@ Create random svg images based on variables set as id's in the svg's
 Readable is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Possible tags in ID 
-### SVG ID
-- colorPalette: get a random palette from the colorpalettes
-- randomPaletteColor: gets random color from palette
-
-example:  <svg id="colorPalette:colorPalette;mainColor:randomPaletteColor"
-the variable colorPalette has now a random color palette and the variable mainColor is a random palette color
 
 ### Element ID
 - dontTouch:element isnt allowed to change
@@ -32,6 +26,7 @@ the variable colorPalette has now a random color palette and the variable mainCo
 - colorContrastMainSecondary: get color from palette with a higher contrast difference from main color and Secondary 
 color
 - isSecondaryColor:  set the last used color as secondary color
+- isMainColor: set the last used color as main color
 
 example: <rect id="colorMaxContrastMain;isSecondaryColor" 
 sets a color with a higher contrast difference from main color and make it the secondary color

@@ -1,14 +1,16 @@
 import contrast from 'get-contrast'
+import { last } from 'lodash'
 
 const processFunctions = {
   palleteColor:  (element, idArray, vars) => {
     const pal =  vars["colorPalette"]
     var random = Math.floor((Math.random() * pal.length-1) + 1)
-    while (vars["lastUsedColor"] === pal[random] && pal.length>1) {
+    while (last(vars["usedColors"]) === pal[random] && pal.length>1) {
       random = Math.floor((Math.random() * pal.length-1) + 1)
     }
-    vars["lastUsedColor"] = pal[random]
+    vars["usedColors"].push(pal[random])
     element.setAttribute("style", "fill:" + pal[random])
+   
   },
   palleteColorNotUsed:  (element, idArray, vars, index) => {
     const pal =  vars["colorPalette"]
@@ -25,7 +27,7 @@ const processFunctions = {
     let breakCounter = 0
     let lastColor = vars["autoUsedColors"][lastUColorlength-1] || "#FFFFFF"
     while ((vars["autoUsedColors"].includes(pal[random]) || 
-      (contrast.ratio(lastColor, pal[random]) < 1.4)) &&
+      (contrast.ratio(lastColor, pal[random]) < 2)) &&
       pal.length>1 && 
       breakCounter < pal.length*3 &&
       lastUColorlength<pal.length) {
@@ -55,43 +57,34 @@ const processFunctions = {
     element.setAttribute("style", "fill:" + newColor)
   },
   isMainColor: (element, idArray, vars) => {
-    vars["mainColor"] =  vars["lastUsedColor"]
+    vars["mainColor"] =  last(vars["usedColors"])
   },
   mainColor: (element, idArray, vars) => {
-    vars["lastUsedColor"] = vars["mainColor"]
+    vars["usedColors"].push(vars["mainColor"])
     element.setAttribute("style", "fill:" + vars["mainColor"])
   },
   isSecondaryColor: (element, idArray, vars) => {
-    vars["secondaryColor"] =  vars["lastUsedColor"]
+    vars["secondaryColor"] = last(vars["usedColors"])
   },
   dontTouch: (element, idArray, vars) => {
 
   },
-  uniqueColor: (element, idArray, vars) => {
-    const pal =  vars["colorPalette"]
-    var random = Math.floor((Math.random() * pal.length-1) + 1)
-    while ((vars["mainColor"] === pal[random] || vars["secondaryColor"] === pal[random]) && pal.length>2) {
-      random = Math.floor((Math.random() * pal.length-1) + 1)
-    }
-    vars["lastUsedColor"] = pal[random]
-    element.setAttribute("style", "fill:" + pal[random])
-  },
   secondaryColor: (element, idArray, vars) => {
-    vars["lastUsedColor"] = vars["secondaryColor"]
+    vars["usedColors"].push(vars["secondaryColor"])
     element.setAttribute("style", "fill:" + vars["secondaryColor"])
   },
   lastUsedColor: (element, idArray, vars) => {
-    element.setAttribute("style", "fill:" + vars["lastUsedColor"])
+    element.setAttribute("style", "fill:" + last(vars["usedColors"]))
   },
   colorContrast:  (element, idArray, vars) => {
-    const newColor = randomColorWithContrast(1.3, vars["lastUsedColor"], vars["colorPalette"])
+    const newColor = randomColorWithContrast(1.3, last(vars["usedColors"]), vars["colorPalette"])
     element.setAttribute("style", "fill:" + newColor)
-    vars["lastUsedColor"] = newColor
+    vars["usedColors"].push(newColor)
   },
   colorContrastMain:  (element, idArray, vars) => {
     const newColor = randomColorWithContrast(1.2, vars["mainColor"], vars["colorPalette"])
     element.setAttribute("style", "fill:" + newColor)
-    vars["lastUsedColor"] = newColor
+    vars["usedColors"].push(newColor)
   },
   colorContrastMainSecondary:  (element, idArray, vars) => {
       const pal =  vars["colorPalette"]
@@ -107,7 +100,7 @@ const processFunctions = {
       const random = Math.floor((Math.random() * posColors.length-1) + 1)
       const newColor = posColors[random]
       element.setAttribute("style", "fill:" + newColor)
-      vars["lastUsedColor"] = newColor
+      vars["usedColors"].push(newColor)
   },
 }
 
