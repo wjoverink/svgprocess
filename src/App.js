@@ -134,6 +134,8 @@ class App extends Component {
       group.colors.forEach(color => {
           color.palettes.forEach(palette => {
             palettes.push(palette)
+            palette["colorName"] = color.name
+            palette["groupName"] = group.name
           })
       })
     })     

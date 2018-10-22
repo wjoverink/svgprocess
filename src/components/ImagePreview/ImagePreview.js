@@ -32,7 +32,7 @@ class ImagePreview extends Component {
           <div className={css(className, styles.img)} style={{width:width}} ref={this.myRef}></div>
           {image.palette && (<div className={css(styles.labelClass)}>
             <span>{image.palette.name}</span>
-            <span style={{color:image.palette.palette[0]}}>{image.palette.palette[0]}</span>
+            <span style={{color:image.palette.palette[0]}}>{image.palette.colorName}</span>
           </div>)}
         </div>
     )
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     margin:'0!important'
   },
   labelClass:{
-    color:' #f50057',
+    // color:' #f50057',
     fontSize: '12px',
     fontWeight: 400,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
