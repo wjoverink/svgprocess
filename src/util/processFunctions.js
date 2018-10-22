@@ -1,5 +1,5 @@
 import contrast from 'get-contrast'
-import { last } from 'lodash'
+import { find, last } from 'lodash'
 
 const processFunctions = {
   palleteColor:  (element, idArray, vars) => {
@@ -17,6 +17,21 @@ const processFunctions = {
     
     if (!vars["autoUsedColors"]){
       vars["autoUsedColors"]=[]
+    }
+    if (!vars["parentElements"]){
+      vars["parentElements"]=[]
+    }
+    let parentElement
+    //parentElement
+    if (element.parentElement.nodeName === 'g'){
+      parentElement = find(vars["parentElements"], {parent:element.parentElement});
+      if (!parentElement){
+        parentElement = {parent:element.parentElement, color:undefined}
+        vars["parentElements"].push(parentElement)
+      } else {
+        element.setAttribute("style", "fill:" + parentElement.color)
+        return
+      }
     }
     
     const lastUColorlength= vars["autoUsedColors"].length
@@ -53,6 +68,9 @@ const processFunctions = {
     if (vars["allChildren"].length-1 === index && !vars["usedColors"].includes(vars["mainColor"])){
       random = Math.floor((Math.random() * vars["allChildren"].length-1) + 1)
       vars["allChildren"][random].setAttribute("style", "fill:" + vars["mainColor"])
+    }
+    if (parentElement){
+      parentElement.color = newColor
     }
     element.setAttribute("style", "fill:" + newColor)
   },
