@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     margin:'0!important'
   },
   labelClass:{
-    // color:' #f50057',
+    color:'darkgray',
     fontSize: '12px',
     fontWeight: 400,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
