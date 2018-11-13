@@ -24,7 +24,7 @@ class FileUpload extends Component {
 
 const styles = StyleSheet.create({
   span:{
-    color: 'rgb(225, 0, 80)',
+    // color: 'rgb(225, 0, 80)',
     width: '100%',
     display: 'inherit',
     alignItems: 'inherit',
@@ -34,27 +34,24 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase'
   },
   button: {
-    border: '1px solid rgba(225, 0, 80, 0.5)',
     padding: '12px 16px 9px 16px',
     fontSize: '0.875rem',
-    minWidth: '64px',
-    transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    minHeight: 36,
     boxSizing: 'border-box',
     lineHeight: '1.4em',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: '500',
-    borderRadius: 4,
     textTransform: 'uppercase',
     cursor: 'pointer',
     outline: 'none',
     position: 'relative',
     userSelect: 'none',
     alignItems: 'center',
-    ':hover' : {
-      border: '1px solid rgb(225, 0, 80)',
-      backgroundColor: 'rgba(225, 0, 80, 0.08)'
-    }
+    textAlign: 'center',
+    width: 185,
+    height: 44,
+    borderRadius: 4,
+    border: 'solid 1px #dfe3e9',
+    backgroundColor: '#ffffff'
   }
 })
 

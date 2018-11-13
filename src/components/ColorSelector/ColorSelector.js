@@ -154,7 +154,7 @@ class ColorSelector extends Component {
     const cNames = colorNames.sort()
     
     return (
-      <div className={css(styles.cWrapper, className)}>
+      <React.Fragment>
         <MultiSelectDropDown
           className={styles.multiSelectDropDown}
           helperText={'Color Group'}
@@ -173,7 +173,7 @@ class ColorSelector extends Component {
           onChange={this.handlePalettes}
           label={'palette'}
           items={pNames} />
-      </div>
+      </React.Fragment>
     )
   }
 }
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   cWrapper: {
   },
   multiSelectDropDown: {
-    marginLeft: 10
+    width: '100%'
   }
 })
 
