@@ -9,7 +9,7 @@ import MainContent from '../MainContent/MainContent';
 class MainPage extends Component {
   state = {
     numberOfImages: 20,
-    imagesWidth: 471,
+    imagesWidth: 457,
     palettes: []
   }
 

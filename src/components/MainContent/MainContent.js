@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   imgsWrapper: {
-    margin: '0 -10px'
+    margin: '0 -20px'
   },
   rWrapper: {
     display: 'flex',
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 'auto',
-    margin: 10,
+    margin: 20,
     marginBottom: 50
   },
   imageSmall: {
