@@ -69,7 +69,7 @@ class LeftMenu extends Component {
             label="has main color"
           /> */}
         </LeftItem>
-        <LeftItem icon={ColorLens} title={'palette'}>
+        <LeftItem wrapperClassName={styles.childrenWrapper} icon={ColorLens} title={'palette'}>
         <ColorSelector 
           colorsJSON={colorsJSON} 
           onChange={this.handleColorSelectorChange}
@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
   labelOriginals: {
     color: 'white',
     ...font
+  },
+  childrenWrapper: {
+    marginTop: 20,
   },
   cWrapper: {
     display: 'flex',

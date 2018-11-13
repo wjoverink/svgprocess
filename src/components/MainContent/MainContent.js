@@ -30,10 +30,10 @@ class MainContent extends Component {
 
   onLoaderfinished = (total, doneCallBack) => {
     const svgs = []
-    return (svg) => {
+    return (svg, fileName) => {
       svgs.push(svg)
       if (total === svgs.length) {
-        this.setState({ svgs, originals: svgs.map((item) => { return { image: item.documentElement.cloneNode(true) } }) },
+        this.setState({ svgs, originals: svgs.map((item) => { return { name: fileName, image: item.documentElement.cloneNode(true) } }) },
           () => doneCallBack.call(this))
       }
     }
@@ -45,6 +45,7 @@ class MainContent extends Component {
     for (let j = 0; j < svgs.length; j++) {
       const doc = svgs[j]
       const collisions = collisionDetection(this.state.originals[j].image)
+      const fileName = this.state.originals[j].name
       for (let index = 0; index < this.props.numberOfImages; index++) {
         const vars = getVarsFromSVG(doc.documentElement)
         const p = this.state.palettes[Math.floor((Math.random() * this.state.palettes.length - 1) + 1)]
@@ -53,7 +54,7 @@ class MainContent extends Component {
         vars['mainColor'] = p.palette[0]
         vars['usedColors'] = []
         vars["alwaysUseMainColor"] = this.state.alwaysUseMainColor
-        images.push({ palette: p, image: processSVG(doc.documentElement.cloneNode(true), vars) })
+        images.push({ palette: p, image: processSVG(doc.documentElement.cloneNode(true), vars), name: fileName })
       }
     }
     this.setState({ images, isLoading: false, completed: 0 })
@@ -68,7 +69,7 @@ class MainContent extends Component {
       (function (file) {
         var reader = new FileReader()
         reader.onload = (e) => {
-          callback(parser.parseFromString(e.target.result, "image/svg+xml"))
+          callback(parser.parseFromString(e.target.result, "image/svg+xml"), file.name)
         }
         reader.readAsText(file, "UTF-8")
       })(files[i])
@@ -139,6 +140,7 @@ class MainContent extends Component {
             imageClass={styles.imageSmall} />
         </div>
         <ImagesPreview
+          showDivider={true}
           imgWidth={this.props.imagesWidth}
           className={styles.imgsWrapper}
           images={images}
@@ -170,7 +172,8 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 'auto',
-    margin: 10
+    margin: 10,
+    marginBottom: 50
   },
   imageSmall: {
     margin: 0,

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 class LeftItem extends Component {
   static propTypes = {
     className: PropTypes.object,
+    wrapperClassName: PropTypes.object,
     title: PropTypes.string,
     Icon: PropTypes.any
   }
@@ -17,7 +18,7 @@ class LeftItem extends Component {
   }
 
   render() {
-    const { className, children, icon, title } = this.props
+    const { className, children, icon, title, wrapperClassName } = this.props
 
     return (
       <div className={css(styles.cWrapper, className)}>
@@ -25,7 +26,7 @@ class LeftItem extends Component {
           {icon && (this.getIcon(icon))}
           <span>{title}</span>
         </div>
-        <div className={css(styles.children)}>{children}</div>
+        <div className={css(styles.children, wrapperClassName)}>{children}</div>
       </div>
     )
   }
@@ -42,10 +43,10 @@ const styles = StyleSheet.create({
   },
   children: {
     marginLeft: 51,
-    marginTop: 20,
+    marginTop: 40,
     ':nth-child(1n)>*': {
       marginBottom: 20,
-  }
+    }
   },
   header: {
     display: 'flex',

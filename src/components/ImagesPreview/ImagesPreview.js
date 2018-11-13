@@ -10,23 +10,29 @@ class ImagesPreview extends Component {
     className: PropTypes.object,
     label: PropTypes.string,
     showEmpty: PropTypes.bool,
-    imgWidth: PropTypes.number
+    imgWidth: PropTypes.number,
+    showDivider: PropTypes.bool
   }
- 
+
 
   render() {
-    const {images, imageClass, labelClass, className, label, showEmpty, imgWidth, ...other} = this.props
-    
+    const { images, imageClass, labelClass, className, label, showEmpty, imgWidth, showDivider, ...other } = this.props
+
     return (
-        <div className={css(styles.wrapper, className)} {...other}>
-          {label && (<span className={css(styles.wrapper, labelClass)}>{label}: </span>)}
-          <div className={css(styles.wrapper)}>
-            {images.map((item, index) => (
-              <ImagePreview width={imgWidth} className={{ ...styles.imageClass, ...imageClass}} key={"image" + index} image={item} />
-            ))}
-              {showEmpty && images.length === 0 && (<span className={css(styles.wrapper, labelClass)}>None</span>)}
-          </div>
+      <div className={css(styles.wrapper, className)} {...other}>
+        {label && (<span className={css(styles.wrapper, labelClass)}>{label}: </span>)}
+        <div className={css(styles.wrapper)}>
+          {images.map((item, index) => (
+            <ImagePreview
+              showDivider={showDivider}
+              width={imgWidth}
+              className={{ ...styles.imageClass, ...imageClass }}
+              key={"image" + index}
+              image={item} />
+          ))}
+          {showEmpty && images.length === 0 && (<span className={css(styles.wrapper, labelClass)}>None</span>)}
         </div>
+      </div>
     )
   }
 }
@@ -42,13 +48,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     overflow: 'hidden'
   },
-  labelClass:{
+  labelClass: {
 
   },
   imageClass: {
     width: 400,
     height: 400,
-    margin: 20
+    margin: 20,
+    marginBottom: 40
   }
 })
 
