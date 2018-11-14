@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     color: colors.textOnBlack,
-    fontSize: 14,
   },
   button:{
     marginLeft: -16,
@@ -69,6 +68,8 @@ const styles = StyleSheet.create({
     }
   },
   title: {
+    ...font,
+    fontSize: 14,
     textTransform: 'uppercase',
     marginLeft: 26
   },

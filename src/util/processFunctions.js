@@ -47,8 +47,8 @@ const processFunctions = {
         newColor = first(difference(pal, [last(vars["usedColors"])]))
       }
     } else {
-      newColor = findBestColorsForCollision(collisionsColors, collision, pal)
-      if (newColor === null){
+     // newColor = findBestColorsForCollision(collisionsColors, collision, pal)
+      if (!newColor){
         const usedColors = [last(vars["usedColors"])]
         const autoUsedColors = [...vars["autoUsedColors"]]
         const encl = find(collisionsColors, {control:last(collision.enclosed)})
@@ -143,8 +143,8 @@ const findBestColorsForCollision = (collisions, collision, palette) => {
   palette.forEach(element => {
     if (enclosed && enclosed.color){
       hasEnclosed = true
-      //if (contrast.ratio(enclosed.color, element) > 2){
-      if (contrast.isAccessible(enclosed.color, element)){
+      if (contrast.ratio(enclosed.color, element) > 1){
+      //if (contrast.isAccessible(enclosed.color, element)){
         newColor = element
         hasColor = true
       }
@@ -155,7 +155,7 @@ const findBestColorsForCollision = (collisions, collision, palette) => {
           const intersection =  find(collisions, {control:el})
           if (intersection && intersection.color){
             hasColor = true
-            if (contrast.ratio(intersection.color, element) > 1.5) {
+            if (contrast.ratio(intersection.color, element) > 1) {
               newColor = element 
             } else {
               newColor = undefined

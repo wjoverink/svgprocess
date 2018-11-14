@@ -8,7 +8,6 @@ import ColorLens from '@material-ui/icons/ColorLens'
 import Settings from '@material-ui/icons/Settings'
 import ColorSelector from '../ColorSelector/ColorSelector'
 import colorsJSON from '../../colorPalette/colorPalettes'
-import { FormControlLabel, Checkbox } from '@material-ui/core';
 import { isFunction, isEmpty, isNumber } from 'lodash'
 import InputTextField from '../controls/InputTextField/InputTextField';
 
@@ -58,7 +57,7 @@ class LeftMenu extends Component {
     return (
       <div className={css(styles.cWrapper, styles.controlsWrapper, className)}>
         <LeftItem onClick={this.handleRefreshClick} icon={Autorenew} title={'refresh'} />
-        <div className={css(styles.divider)} />>
+        <div className={css(styles.divider)} />
         <LeftItem icon={Settings} title={'settings'}>
           <InputTextField
             label="img per SVG"
@@ -70,15 +69,6 @@ class LeftMenu extends Component {
             value={imagesWidth}
             onChange={this.handleWidthChange}
           />
-          {/* <FormControlLabel
-            control={
-              <Checkbox
-                // checked={this.state.alwaysUseMainColor}
-                // onChange={this.handleCheckboxClick}
-              />
-            }
-            label="has main color"
-          /> */}
         </LeftItem>
         <LeftItem wrapperClassName={styles.childrenWrapper} icon={ColorLens} title={'palette'}>
           <ColorSelector 
@@ -92,10 +82,6 @@ class LeftMenu extends Component {
 }
 
 const styles = StyleSheet.create({
-  labelOriginals: {
-    color: 'white',
-    ...font
-  },
   childrenWrapper: {
     marginTop: 20,
   },
@@ -115,6 +101,7 @@ const styles = StyleSheet.create({
   divider: {
     width: 210,
     height: 1,
+    marginBottom: 20,
     backgroundColor: '#4a4a4a'
   }
 })

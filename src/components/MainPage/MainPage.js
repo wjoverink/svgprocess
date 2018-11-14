@@ -24,10 +24,29 @@ class MainPage extends Component {
 
     this.state = {
       numberOfImages: 20,
-      imagesWidth: 457,
+      imagesWidth: 471,
       palettes: palettes,
       refresh: false
     }
+
+    this.mainContentRef= React.createRef()
+  }
+
+  updateDimensions = () => {
+    const mcRect = this.mainContentRef.current.mainContentRef.current.getBoundingClientRect()
+    const newWidth =  Math.round((mcRect.width - 256) / 3)
+    this.setState({
+      imagesWidth: newWidth
+    })
+  }
+
+  componentDidMount = () => {
+    window.addEventListener("resize", this.updateDimensions);
+    setTimeout(this.updateDimensions, 200) //TODO
+  }
+
+  componentWillUnmount = () =>  {
+      window.removeEventListener("resize", this.updateDimensions);
   }
 
   onWidthChange = width => {
@@ -69,6 +88,7 @@ class MainPage extends Component {
             onRefreshClick={this.onRefreshClick}
             className={styles.leftmenu} />
           <MainContent 
+            ref={this.mainContentRef}
             refresh={refresh}
             palettes={palettes}
             numberOfImages={numberOfImages}

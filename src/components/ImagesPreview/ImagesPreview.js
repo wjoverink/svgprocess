@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { css, StyleSheet } from 'aphrodite/no-important'
-import ImagePreview from '../ImagePreview/ImagePreview'
+import ImagePreview from './ImagePreview'
 
 class ImagesPreview extends Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class ImagesPreview extends Component {
             <ImagePreview
               showDivider={showDivider}
               width={imgWidth}
-              className={{ ...styles.imageClass, ...imageClass }}
+              className={{ ...imageClass }}
               key={"image" + index}
               image={item} />
           ))}
@@ -47,15 +47,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'flex-end',
     overflow: 'hidden'
-  },
-  labelClass: {
-
-  },
-  imageClass: {
-    width: 400,
-    height: 400,
-    margin: 20,
-    marginBottom: 40
   }
 })
 

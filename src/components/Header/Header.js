@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   middle: {
     marginRight: 'auto',
-    paddingLeft: 164
+    paddingLeft: 148
   },
   line: {
     width: 1,

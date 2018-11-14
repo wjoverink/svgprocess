@@ -4,19 +4,31 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import HighlightOff from '@material-ui/icons/HighlightOff'
-import { IconButton } from '@material-ui/core';
-import { copyToClipBoard } from '../../util/copyToClipBoard';
-import { saveAsSvg } from '../../util/downloadHelper';
-import TextWithClipBoard from '../controls/TextWithClipBoard/TextWithClipBoard';
+import { IconButton } from '@material-ui/core'
+import { copyToClipBoard } from '../../util/copyToClipBoard'
+import { saveAsSvg } from '../../util/downloadHelper'
+import TextWithClipBoard from '../controls/TextWithClipBoard/TextWithClipBoard'
+import CheckBox from '../controls/CheckBox/CheckBox'
+
+const checkedState = {
+  GOOD: 1,
+  BAD: 0,
+  NONE: 2,
+}
 
 class ImagePreview extends Component {
+  state = {
+    checked: checkedState.NONE,
+  }
+
   static propTypes = {
     image: PropTypes.any,
     className: PropTypes.object,
-    showDivider: PropTypes.bool
+    showDivider: PropTypes.bool,
+    // checkedState: PropTypes.oneOf(Object.keys(checkedState))
   }
   myRef = React.createRef()
-  
+
   componentDidUpdate() {
     this.myRef.current.innerHTML = "";
     if (this.props.image) {
@@ -36,18 +48,35 @@ class ImagePreview extends Component {
 
 
   saveSvg = () => {
-    const name =  this.props.image.name.slice(0,-4) + 
-      '_' + 
-      this.props.image.palette.name.replace(' ','-') + 
-      '_' + 
-      this.props.image.palette.colorName.replace(' ','-') +
+    const name = this.props.image.name.slice(0, -4) +
+      '_' +
+      this.props.image.palette.name.replace(' ', '-') +
+      '_' +
+      this.props.image.palette.colorName.replace(' ', '-') +
       '.svg'
     saveAsSvg(this.props.image.image, name)
-}
+  }
+
+  handleBadClick = checked => {
+    const s = this.state.checked === checkedState.BAD ? checkedState.NONE : checkedState.BAD
+    this.setState({ 
+      checked: s 
+    })
+  }
+
+  handleGoodClick = event => {
+    const s = this.state.checked === checkedState.GOOD ? checkedState.NONE : checkedState.GOOD
+    this.setState({ 
+      checked: s 
+    })
+  }
 
   render() {
     const { className, image, width, showDivider, ...other } = this.props
     const palletesString = image.palette && image.palette.palette.toString()
+    const isBadChecked = this.state.checked===checkedState.BAD
+    const isGoodChecked = this.state.checked===checkedState.GOOD
+
     return (
       <div className={css(styles.wrapper, className)} {...other}>
         <div className={css(className, styles.img)} style={{ width: width }} ref={this.myRef}></div>
@@ -65,24 +94,30 @@ class ImagePreview extends Component {
         {image.palette && (
           <div className={css(styles.pColorWrapper)}>
             {image.palette.palette.map((item, index) => (
-               <TextWithClipBoard 
+              <TextWithClipBoard
                 clipBoardText={palletesString}
                 onClick={copyToClipBoard.bind(this, palletesString)}
                 key={item}
                 title={item}
                 style={{ backgroundColor: item }}
                 className={styles.paletteDiv}
-                />
+              />
             ))}
             <div className={css(styles.buttons)}>
-              <IconButton aria-label="Vote as bad image" >
-                <HighlightOff className={css(styles.paletteDiv)} />
-              </IconButton>
-              <IconButton className={css(styles.middleButton)} aria-label="Vote as good image" >
-                <CheckCircle className={css(styles.paletteDiv)} />
-              </IconButton>
-              <IconButton onClick={this.saveSvg}  aria-label="Save SVG" >
-                <SaveAlt className={css(styles.paletteDiv)}/>
+              <CheckBox
+                onChange={this.handleBadClick}
+                aria-label="Vote as bad image"
+                checked={isBadChecked}
+                checkedIcon={<HighlightOff className={css(styles.paletteDiv)} />}
+                icon={<HighlightOff className={css(styles.paletteDiv)} />} />
+              <CheckBox
+                aria-label="Vote as good image"
+                onChange={this.handleGoodClick}
+                checked={isGoodChecked}
+                checkedIcon={<CheckCircle className={css(styles.paletteDiv, styles.greenColor)} />}
+                icon={<CheckCircle className={css(styles.paletteDiv)} />} />
+              <IconButton onClick={this.saveSvg} aria-label="Save SVG" >
+                <SaveAlt className={css(styles.paletteDiv)} />
               </IconButton>
             </div>
           </div>
@@ -107,28 +142,25 @@ const styles = StyleSheet.create({
   buttons: {
     marginLeft: 'auto',
     ':nth-child(1n)>*': {
-      marginTop: '-23px'
+      marginTop: '-14px'
     },
     ':nth-child(1n)>*:last-child': {
       marginRight: '-10px'
     }
   },
+  greenColor: {
+    color: '#27ae60',
+  },
   paletteDiv: {
     width: 28,
     height: 28,
-    cursor: 'pointer'
-  },
-  middleButton: {
-    marginRight: 5,
-    marginLeft: 5,
-    color: '#27ae60',
   },
   img: {
     margin: '0!important'
   },
   line: {
     height: 1,
-    marginTop: 31,
+    marginTop: 21,
     borderBottom: 'solid 1px #979797'
   },
   labelClass: {

@@ -44,7 +44,15 @@ class InputTextField extends Component {
     })
 
     if (isFunction(this.props.onChange)) {
-      this.changeTimeout = setTimeout(this.props.onChange.bind(this, event.target.value), 300);
+      this.changeTimeout = setTimeout(this.props.onChange.bind(this, event.target.value), 500);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({
+        value: this.props.value
+      })
     }
   }
 

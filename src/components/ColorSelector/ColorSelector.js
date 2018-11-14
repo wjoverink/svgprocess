@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { css, StyleSheet } from 'aphrodite/no-important'
+import { StyleSheet } from 'aphrodite/no-important'
 import MultiSelectDropDown from '../controls/MultiSelectDropDown/MultiSelectDropDown'
 import { isFunction } from 'lodash'
 
@@ -146,7 +146,6 @@ class ColorSelector extends Component {
   }
 
   render() {
-    const { className } = this.props
     const { paletteNames, groupNames, colorNames } = this.state
 
     const pNames = paletteNames.sort()
@@ -179,8 +178,6 @@ class ColorSelector extends Component {
 }
 
 const styles = StyleSheet.create({
-  cWrapper: {
-  },
   multiSelectDropDown: {
     width: '100%'
   }

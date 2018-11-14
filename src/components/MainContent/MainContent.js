@@ -17,6 +17,8 @@ class MainContent extends Component {
     className: PropTypes.object
   }
 
+  mainContentRef= React.createRef()
+
   static propTypes = {
     imagesWidth: PropTypes.number,
     numberOfImages: PropTypes.number,
@@ -103,7 +105,7 @@ class MainContent extends Component {
     const { images, originals } = this.state
     const { className } = this.props
     return (
-      <div className={css(styles.controlsWrapper, className)}>
+      <div ref={this.mainContentRef} className={css(styles.controlsWrapper, className)}>
         <div className={css(styles.rWrapper)}>
           <FileUpload onChange={this.onImageChange} />
           <ImagesPreview
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   controlsWrapper: {
     backgroundColor: colors.mainBackgroundColor,
     overflow: 'auto',
-    padding: 100
+    padding: 80
   },
   progress: {
     marginLeft: 'auto',
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flex: 1,
-    marginBottom: 50
+    marginBottom: 30
   },
   image: {
     height: 'auto',
