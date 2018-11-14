@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import FileUpload from '../controls/FileUpload/FileUpload'
 import ImagesPreview from '../ImagesPreview/ImagesPreview'
 import { processSVG, getVarsFromSVG, collisionDetection } from '../../util/processsvg'
-import colorsJSON from '../../colorPalette/colorPalettes'
 import { colors } from '../../styles/styles'
 import PropTypes from 'prop-types'
 
@@ -15,8 +14,7 @@ class MainContent extends Component {
     svgs: [],
     originals: [],
     alwaysUseMainColor: false,
-    className: PropTypes.object,
-    palettes: this.props.palettes
+    className: PropTypes.object
   }
 
   static propTypes = {
@@ -24,8 +22,6 @@ class MainContent extends Component {
     numberOfImages: PropTypes.number,
     palettes: PropTypes.array
   }
-
-  changeTimeout = undefined
 
   onLoaderfinished = (total, doneCallBack) => {
     const svgs = []
@@ -47,7 +43,7 @@ class MainContent extends Component {
       const fileName = this.state.originals[j].name
       for (let index = 0; index < this.props.numberOfImages; index++) {
         const vars = getVarsFromSVG(doc.documentElement)
-        const p = this.state.palettes[Math.floor((Math.random() * this.state.palettes.length - 1) + 1)]
+        const p = this.props.palettes[Math.floor((Math.random() * this.props.palettes.length - 1) + 1)]
         vars['colorPalette'] = p.palette
         vars['collisions'] = collisions
         vars['mainColor'] = p.palette[0]
@@ -90,36 +86,15 @@ class MainContent extends Component {
     }, this.processDocs)
   }
 
-  componentDidMount() {
-    const palettes = []
-    colorsJSON.palettes.forEach(group => {
-      group.colors.forEach(color => {
-        color.palettes.forEach(palette => {
-          palettes.push(palette)
-          palette["colorName"] = color.name
-          palette["groupName"] = group.name
-        })
-      })
-    })
-    this.setState({ palettes })
-  }
-  // imagesWidth: PropTypes.number,
-  // numberOfImages: PropTypes.number,
   componentDidUpdate(prevProps) {
     if (prevProps.imagesWidth !== this.props.imagesWidth ||
-      prevProps.numberOfImages !== this.props.numberOfImages
+      prevProps.numberOfImages !== this.props.numberOfImages || 
+      prevProps.refresh !== this.props.refresh ||
+      prevProps.palettes !== this.props.palettes
     ) {
       this.setState({
         images: [],
         isLoading: true,
-      }, this.processDocs)
-    }
-    if ( prevProps.palettes !== this.props.palettes
-    ) {
-      this.setState({
-        images: [],
-        isLoading: true,
-        palettes: this.props.palettes
       }, this.processDocs)
     }
   }

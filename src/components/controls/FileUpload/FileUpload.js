@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { css, StyleSheet } from 'aphrodite/no-important'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import { uniqueId } from 'lodash'
 
 class FileUpload extends Component {

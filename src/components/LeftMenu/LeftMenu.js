@@ -19,7 +19,8 @@ class LeftMenu extends Component {
     numberOfImages: PropTypes.number,
     onWidthChange: PropTypes.func,
     onTotalImgChange: PropTypes.func,
-    onPaletteChange: PropTypes.func
+    onPaletteChange: PropTypes.func,
+    onRefreshClick: PropTypes.func,
   }
 
   handleTotalImgChange = total => {
@@ -45,13 +46,18 @@ class LeftMenu extends Component {
     }
   }
 
+  handleRefreshClick = event => {
+    if (isFunction(this.props.onRefreshClick)) {
+      this.props.onRefreshClick(event)
+    }
+  }
+
   render() {
     const { className, imagesWidth, numberOfImages } = this.props
 
     return (
       <div className={css(styles.cWrapper, styles.controlsWrapper, className)}>
-        <LeftItem icon={Autorenew} title={'refresh'}>
-        </LeftItem>
+        <LeftItem onClick={this.handleRefreshClick} icon={Autorenew} title={'refresh'} />
         <div className={css(styles.divider)} />>
         <LeftItem icon={Settings} title={'settings'}>
           <InputTextField
@@ -75,10 +81,10 @@ class LeftMenu extends Component {
           /> */}
         </LeftItem>
         <LeftItem wrapperClassName={styles.childrenWrapper} icon={ColorLens} title={'palette'}>
-        <ColorSelector 
-          colorsJSON={colorsJSON} 
-          onChange={this.handleColorSelectorChange}
-          />
+          <ColorSelector 
+            colorsJSON={colorsJSON} 
+            onChange={this.handleColorSelectorChange}
+            />
         </LeftItem>
       </div>
     )
@@ -103,7 +109,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundColor,
     position: 'relative',
     borderBottom: '1px solid rgba(225, 0, 80, 0.5)',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    alignItems: 'stretch'
   },
   divider: {
     width: 210,

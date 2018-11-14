@@ -3,14 +3,31 @@ import React, { Component } from 'react'
 import provideScrollPosition from 'react-provide-scroll-position'
 import Header from '../Header/Header'
 import LeftMenu from '../LeftMenu/LeftMenu';
-import MainContent from '../MainContent/MainContent';
-
+import MainContent from '../MainContent/MainContent'
+import colorsJSON from '../../colorPalette/colorPalettes'
 
 class MainPage extends Component {
-  state = {
-    numberOfImages: 20,
-    imagesWidth: 457,
-    palettes: []
+
+  constructor(props) {
+    super(props)
+
+    const palettes = []
+    colorsJSON.palettes.forEach(group => {
+      group.colors.forEach(color => {
+        color.palettes.forEach(palette => {
+          palettes.push(palette)
+          palette["colorName"] = color.name
+          palette["groupName"] = group.name
+        })
+      })
+    })
+
+    this.state = {
+      numberOfImages: 20,
+      imagesWidth: 457,
+      palettes: palettes,
+      refresh: false
+    }
   }
 
   onWidthChange = width => {
@@ -31,8 +48,14 @@ class MainPage extends Component {
     })
   }
 
+  onRefreshClick = event => {
+    this.setState(state => (
+      { refresh: !state.refresh }
+    ))
+  }
+
   render() {
-    const { numberOfImages, imagesWidth, palettes } = this.state
+    const { numberOfImages, imagesWidth, palettes, refresh } = this.state
     return (
       <div className={css(styles.mainWrapper)}>
         <Header className={styles.header}></Header>
@@ -43,8 +66,10 @@ class MainPage extends Component {
             onWidthChange={this.onWidthChange}
             onTotalImgChange={this.onTotalImgChange}
             onPaletteChange={this.onPaletteChange}
+            onRefreshClick={this.onRefreshClick}
             className={styles.leftmenu} />
           <MainContent 
+            refresh={refresh}
             palettes={palettes}
             numberOfImages={numberOfImages}
             imagesWidth={imagesWidth}
