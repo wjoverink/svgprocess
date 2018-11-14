@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { css, StyleSheet } from 'aphrodite/no-important'
-import MultiSelectDropDown from '../MultiSelectDropDown/MultiSelectDropDown'
+import MultiSelectDropDown from '../controls/MultiSelectDropDown/MultiSelectDropDown'
 import { isFunction } from 'lodash'
 
 class ColorSelector extends Component {

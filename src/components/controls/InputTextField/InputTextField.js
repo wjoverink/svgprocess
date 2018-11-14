@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
-import { isFunction, isEmpty, isNumber } from 'lodash'
+import { isFunction } from 'lodash'
 
 const muiStyles = theme => ({
   root: {
@@ -39,15 +39,12 @@ class InputTextField extends Component {
   handleChange = event => {
     clearTimeout(this.changeTimeout)
 
-    let imgWidth = isEmpty(event.target.value) ? 0 : parseInt(event.target.value)
-    imgWidth = isNumber(imgWidth) ? imgWidth : 0
-
     this.setState({
-      value: imgWidth,
+      value: event.target.value,
     })
 
     if (isFunction(this.props.onChange)) {
-      this.changeTimeout = setTimeout(this.props.onChange.bind(this, imgWidth), 300);
+      this.changeTimeout = setTimeout(this.props.onChange.bind(this, event.target.value), 300);
     }
   }
 

@@ -1,11 +1,10 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
-import FileUpload from '../FileUpload/FileUpload'
+import FileUpload from '../controls/FileUpload/FileUpload'
 import ImagesPreview from '../ImagesPreview/ImagesPreview'
 import { processSVG, getVarsFromSVG, collisionDetection } from '../../util/processsvg'
-import { isNumber, isEmpty } from 'lodash'
 import colorsJSON from '../../colorPalette/colorPalettes'
-import { font, colors } from '../../styles/styles'
+import { colors } from '../../styles/styles'
 import PropTypes from 'prop-types'
 
 class MainContent extends Component {

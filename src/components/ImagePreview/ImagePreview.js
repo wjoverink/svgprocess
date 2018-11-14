@@ -5,6 +5,9 @@ import SaveAlt from '@material-ui/icons/SaveAlt'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import HighlightOff from '@material-ui/icons/HighlightOff'
 import { IconButton } from '@material-ui/core';
+import { copyToClipBoard } from '../../util/copyToClipBoard';
+import { saveAsSvg } from '../../util/downloadHelper';
+import TextWithClipBoard from '../controls/TextWithClipBoard/TextWithClipBoard';
 
 class ImagePreview extends Component {
   static propTypes = {
@@ -13,8 +16,7 @@ class ImagePreview extends Component {
     showDivider: PropTypes.bool
   }
   myRef = React.createRef()
-  copyTextBox = React.createRef()
-
+  
   componentDidUpdate() {
     this.myRef.current.innerHTML = "";
     if (this.props.image) {
@@ -31,32 +33,16 @@ class ImagePreview extends Component {
     this.myRef.current.innerHTML = "";
   }
 
-  CopyToClipBoard = text => {
-    var copyText = this.copyTextBox.current
-    copyText.value = text
-    copyText.select();
-    document.execCommand("copy");
-  }
+
 
   saveSvg = () => {
-    const svgEl = this.props.image.image
     const name =  this.props.image.name.slice(0,-4) + 
       '_' + 
       this.props.image.palette.name.replace(' ','-') + 
       '_' + 
       this.props.image.palette.colorName.replace(' ','-') +
       '.svg'
-    svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    var svgData = svgEl.outerHTML;
-    var preface = '<?xml version="1.0" standalone="no"?>\r\n';
-    var svgBlob = new Blob([preface, svgData], {type:"image/svg+xml;charset=utf-8"});
-    var svgUrl = URL.createObjectURL(svgBlob);
-    var downloadLink = document.createElement("a");
-    downloadLink.href = svgUrl;
-    downloadLink.download = name;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    saveAsSvg(this.props.image.image, name)
 }
 
   render() {
@@ -64,32 +50,29 @@ class ImagePreview extends Component {
     const palletesString = image.palette && image.palette.palette.toString()
     return (
       <div className={css(styles.wrapper, className)} {...other}>
-        <input ref={this.copyTextBox} className={css(styles.hiddenTextBox)} type="text"></input>
         <div className={css(className, styles.img)} style={{ width: width }} ref={this.myRef}></div>
         {image.palette && (<div className={css(styles.labelClass)}>
-          <span
-            onClick={this.CopyToClipBoard.bind(this, image.palette.colorName)}>
+          <TextWithClipBoard clipBoardText={image.palette.colorName}>
             {'color: ' + image.palette.colorName}
-          </span>
-          <span
-            onClick={this.CopyToClipBoard.bind(this, image.palette.name)}>
-            {'palette: ' + image.palette.name}
-          </span>
-          <span
-            onClick={this.CopyToClipBoard.bind(this, image.name)}>
-            {'filename: ' + image.name}
-          </span>
-          {/* style={{color:image.palette.palette[0]}} */}
+          </TextWithClipBoard>
+          <TextWithClipBoard clipBoardText={image.palette.name}>
+            {'color: ' + image.palette.name}
+          </TextWithClipBoard>
+          <TextWithClipBoard clipBoardText={image.name}>
+            {'color: ' + image.name}
+          </TextWithClipBoard>
         </div>)}
         {image.palette && (
           <div className={css(styles.pColorWrapper)}>
             {image.palette.palette.map((item, index) => (
-              <div
-                onClick={this.CopyToClipBoard.bind(this, palletesString)}
+               <TextWithClipBoard 
+                clipBoardText={palletesString}
+                onClick={copyToClipBoard.bind(this, palletesString)}
                 key={item}
                 title={item}
                 style={{ backgroundColor: item }}
-                className={css(styles.paletteDiv)}></div>
+                className={styles.paletteDiv}
+                />
             ))}
             <div className={css(styles.buttons)}>
               <IconButton aria-label="Vote as bad image" >
@@ -120,10 +103,6 @@ const styles = StyleSheet.create({
   pColorWrapper: {
     display: 'flex',
     flexDirection: 'row',
-  },
-  hiddenTextBox: {
-    position: 'absolute',
-    left: -9999
   },
   buttons: {
     marginLeft: 'auto',
@@ -161,10 +140,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     lineHeight: '1.4em',
     flexDirection: 'column',
-    textTransform: 'uppercase',
-    ':nth-child(1n)>span': {
-      cursor: 'pointer'
-    }
+    textTransform: 'uppercase'
   }
 })
 

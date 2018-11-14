@@ -9,8 +9,8 @@ import Settings from '@material-ui/icons/Settings'
 import ColorSelector from '../ColorSelector/ColorSelector'
 import colorsJSON from '../../colorPalette/colorPalettes'
 import { FormControlLabel, Checkbox } from '@material-ui/core';
-import InputTextField from '../InputTextField/InputTextField';
-import { isFunction } from 'lodash'
+import { isFunction, isEmpty, isNumber } from 'lodash'
+import InputTextField from '../controls/InputTextField/InputTextField';
 
 class LeftMenu extends Component {
   static propTypes = {
@@ -24,13 +24,18 @@ class LeftMenu extends Component {
 
   handleTotalImgChange = total => {
     if (isFunction(this.props.onTotalImgChange)) {
-      this.props.onTotalImgChange(total)
+      this.props.onTotalImgChange(this.toInt(total))
     }
+  }
+
+  toInt = value => {
+    const imgWidth = isEmpty(value) ? 0 : parseInt(value)
+    return isNumber(imgWidth) ? imgWidth : 0
   }
 
   handleWidthChange = width => {
     if (isFunction(this.props.onWidthChange)) {
-      this.props.onWidthChange(width)
+      this.props.onWidthChange(this.toInt(width))
     }
   }
 
