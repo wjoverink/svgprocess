@@ -28,7 +28,6 @@ class TextWithClipBoard extends Component {
           {children || text}
         </span>
       </React.Fragment>
-
     )
   }
 }

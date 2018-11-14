@@ -56,10 +56,10 @@ class ImagePreview extends Component {
             {'color: ' + image.palette.colorName}
           </TextWithClipBoard>
           <TextWithClipBoard clipBoardText={image.palette.name}>
-            {'color: ' + image.palette.name}
+            {'palette: ' + image.palette.name}
           </TextWithClipBoard>
           <TextWithClipBoard clipBoardText={image.name}>
-            {'color: ' + image.name}
+            {'file: ' + image.name}
           </TextWithClipBoard>
         </div>)}
         {image.palette && (
