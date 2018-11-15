@@ -2,6 +2,7 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import { ReactComponent as KonversedLogo }  from '../../images/konversed-logo.svg'
 import { ReactComponent as Logo }  from '../../images/group-30.svg'
+import { ReactComponent as MarketLogo }  from '../../images/marketplace-icon.svg'
 import { font, colors} from '../../styles/styles'
 import PropTypes from 'prop-types'
 
@@ -17,10 +18,10 @@ class Header extends Component {
       <div className={css(styles.cWrapper, styles.controlsWrapper, className)}>
         <KonversedLogo />
         <div className={css(styles.cWrapper, styles.middle)}>
-          <div className={css(styles.icon)}></div>
+          <MarketLogo className={css(styles.icon)}></MarketLogo>
           <div className={css(styles.line)}></div>
           <header className={css(styles.labelOriginals, styles.header)}>
-            {'Piñata Factory'}
+            {'Marketplace'}
           </header>
         </div>
         <Logo/>
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-    backgroundImage: 'linear-gradient(to top, #ff2967, #ff5d39)'
+    //backgroundImage: 'linear-gradient(to top, #ff2967, #ff5d39)'
   }
 })
 

@@ -4,11 +4,13 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import HighlightOff from '@material-ui/icons/HighlightOff'
+import Done from '@material-ui/icons/Done'
 import { IconButton } from '@material-ui/core'
 import { copyToClipBoard } from '../../util/copyToClipBoard'
 import { saveAsSvg } from '../../util/downloadHelper'
 import TextWithClipBoard from '../controls/TextWithClipBoard/TextWithClipBoard'
 import CheckBox from '../controls/CheckBox/CheckBox'
+import contrast from 'get-contrast'
 
 const checkedState = {
   GOOD: 1,
@@ -82,13 +84,13 @@ class ImagePreview extends Component {
         <div className={css(className, styles.img)} style={{ width: width }} ref={this.myRef}></div>
         {image.palette && (<div className={css(styles.labelClass)}>
           <TextWithClipBoard clipBoardText={image.palette.colorName}>
-            {'color: ' + image.palette.colorName}
+            <span className={css(styles.bold)}>color: </span><span>{image.palette.colorName}</span>
           </TextWithClipBoard>
           <TextWithClipBoard clipBoardText={image.palette.name}>
-            {'palette: ' + image.palette.name}
+            <span className={css(styles.bold)}>palette: </span><span>{image.palette.name}</span>
           </TextWithClipBoard>
           <TextWithClipBoard clipBoardText={image.name}>
-            {'file: ' + image.name}
+            <span className={css(styles.bold)}>file: </span><span>{image.name}</span>
           </TextWithClipBoard>
         </div>)}
         {image.palette && (
@@ -100,8 +102,11 @@ class ImagePreview extends Component {
                 key={item}
                 title={item}
                 style={{ backgroundColor: item }}
-                className={styles.paletteDiv}
-              />
+                className={styles.paletteDiv}>
+                { image.usedColors.includes(item) && (
+                  <Done className={css(styles.doneIcon, contrast.ratio(item, '#ffffff') <2 && styles.doneIconBlack)}/>
+                )}
+                </TextWithClipBoard>
             ))}
             <div className={css(styles.buttons)}>
               <CheckBox
@@ -151,13 +156,27 @@ const styles = StyleSheet.create({
   greenColor: {
     color: '#27ae60',
   },
+  doneIcon: {
+    width: 14,
+    height: 14,
+    color: 'white'
+  },
+  doneIconBlack: {
+    color: 'black'
+  },
   paletteDiv: {
     width: 28,
     height: 28,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   img: {
     margin: '0!important'
   },
+  bold: {
+    fontWeight: 'bold'
+  },  
   line: {
     height: 1,
     marginTop: 21,

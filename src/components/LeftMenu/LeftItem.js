@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   cWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     color: colors.textOnBlack,
   },
   button:{

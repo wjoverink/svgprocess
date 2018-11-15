@@ -51,7 +51,11 @@ class MainContent extends Component {
         vars['mainColor'] = p.palette[0]
         vars['usedColors'] = []
         vars["alwaysUseMainColor"] = this.state.alwaysUseMainColor
-        images.push({ palette: p, image: processSVG(doc.documentElement.cloneNode(true), vars), name: fileName })
+        images.push({ 
+          palette: p, 
+          image: processSVG(doc.documentElement.cloneNode(true), vars), 
+          name: fileName, 
+          usedColors:  vars['usedColors']  })
       }
     }
     this.setState({ images, isLoading: false, completed: 0 })
