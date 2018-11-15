@@ -1,22 +1,23 @@
 import { processFunctions } from './processFunctions'
 import { processVars } from './processVars'
-const splitOn  = ";"
+const splitOn  = " "
 
 const processSVG = (svg, processvars) => {
   console.log("=============START================")
   const children = recursivelyGetChildNodes(svg)
   processvars["allChildren"] = children
   children.forEach((child, index) => { 
-    if (child.id){
-      const idArray = child.id.split(splitOn)
-      idArray.forEach((str) => {
-        if (processFunctions[str]){
-          processFunctions[str](child, idArray, processvars)
-        } else { // if (canBeTarget(child)){
-          //AUTO color
-          processFunctions["palleteColorNotUsed"](child, idArray, processvars, index)
-        }
-      })
+    if (child.className.baseVal){
+      const idArray = child.className.baseVal.split(splitOn)
+      if (!idArray.includes('dontTouch')){
+        idArray.forEach((str) => {
+          if (processFunctions[str]){
+            processFunctions[str](child, idArray, processvars)
+          } else { // if (canBeTarget(child)){
+            //AUTO color
+            processFunctions["palleteColorNotUsed"](child, idArray, processvars, index)
+          }
+      })}
     } else { //if (canBeTarget(child)){
       //AUTO color
       processFunctions["palleteColorNotUsed"](child, [], processvars, index)
