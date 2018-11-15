@@ -97,8 +97,8 @@ class ImagePreview extends Component {
           <div className={css(styles.pColorWrapper)}>
             {image.palette.palette.map((item, index) => (
               <TextWithClipBoard
-                clipBoardText={palletesString}
-                onClick={copyToClipBoard.bind(this, palletesString)}
+                // clipBoardText={palletesString}
+                clipBoardText={item}
                 key={item}
                 title={item}
                 style={{ backgroundColor: item }}
