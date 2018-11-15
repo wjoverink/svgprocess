@@ -48,6 +48,7 @@ const processFunctions = {
       }
     } else {
      // newColor = findBestColorsForCollision(collisionsColors, collision, pal)
+     //   if (newColor === null){
       if (!newColor){
         const usedColors = [last(vars["usedColors"])]
         const autoUsedColors = [...vars["autoUsedColors"]]
