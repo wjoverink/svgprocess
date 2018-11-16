@@ -30,8 +30,9 @@ class ColorSelector extends PureComponent {
   }
 
   onChange = () => {
+    clearTimeout(this.changeTimeout)
     if (isFunction(this.props.onChange)) {
-      this.props.onChange(this.selectedPalettes)
+      this.changeTimeout = setTimeout(this.props.onChange.bind(this, this.selectedPalettes), 1000);
     }
   }
 
