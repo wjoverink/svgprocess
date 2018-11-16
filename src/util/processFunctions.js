@@ -36,27 +36,12 @@ const processFunctions = {
       }
     }
 
-    //[{control:child,color:undefined,enclosed:[], intersection:[]}]
-    //const collisionsColors = vars["collisions"]
     let newColor = undefined
-    // const collision = collisionsColors[index]
-    // if (collision.enclosed.length === 0 && collision.intersection.length === 0){
-    //   newColor = first(difference(pal, vars["autoUsedColors"]))
-    //   if (!newColor){
-    //     vars["autoUsedColors"] = []
-    //     newColor = first(difference(pal, [last(vars["usedColors"])]))
-    //   }
-    // } else {
-     // newColor = findBestColorsForCollision(collisionsColors, collision, pal)
-     //   if (newColor === null){
+
       if (!newColor){
         const usedColors = [last(vars["usedColors"])]
         const autoUsedColors = [...vars["autoUsedColors"]]
-        // const encl = find(collisionsColors, {control:last(collision.enclosed)})
-        // if (encl && encl.color){
-        //   usedColors.push(encl.color)
-        //   autoUsedColors.push(encl.color)
-        // }
+
         newColor = first(difference(pal, autoUsedColors))
         if (!newColor){
           vars["autoUsedColors"] = []
@@ -65,23 +50,12 @@ const processFunctions = {
 
       }
 
-    //}
     if (!newColor){
       newColor = "white"
     }
     vars["usedColors"].push(newColor)
     vars["autoUsedColors"].push(newColor)
-    //collision.color = newColor
 
-    // const colParent = find(vars["collisions"], element)
-    // if (colParent){
-    //   colParent.color = newColor
-    // }
-
-    // if (vars["allChildren"].length-1 === index && !vars["usedColors"].includes(vars["mainColor"])){
-    //   random = Math.floor((Math.random() * vars["allChildren"].length-1) + 1)
-    //   vars["allChildren"][random].setAttribute("style", "fill:" + vars["mainColor"])
-    // }
     if (parentElement) {
       parentElement.color = newColor
     }
@@ -133,46 +107,6 @@ const processFunctions = {
     element.setAttribute("style", "fill:" + newColor)
     vars["usedColors"].push(newColor)
   },
-}
-
-const findBestColorsForCollision = (collisions, collision, palette) => {
-  const enclosed =  find(collisions, {control:last(collision.enclosed)})
-  // const intersection =  find(collisions, {control:first(collision.intersection)})
-  let newColor = undefined
-  let hasColor = false
-  let hasEnclosed = false
-  palette.forEach(element => {
-    if (enclosed && enclosed.color){
-      hasEnclosed = true
-      if (contrast.ratio(enclosed.color, element) > 1){
-      //if (contrast.isAccessible(enclosed.color, element)){
-        newColor = element
-        hasColor = true
-      }
-    }
-    if (((!hasEnclosed || (hasEnclosed && hasColor)) && (!enclosed || enclosed.color!==element))){
-      collision.intersection.some(el => {
-        if (!enclosed || el!==enclosed.control){
-          const intersection =  find(collisions, {control:el})
-          if (intersection && intersection.color){
-            hasColor = true
-            if (contrast.ratio(intersection.color, element) > 1) {
-              newColor = element 
-            } else {
-              newColor = undefined
-              return true
-            }
-          }
-        }
-        return false
-      })
-    }
-  })
-  if (!hasColor){
-    return null
-  }
-
-  return newColor
 }
 
 const randomColorWithContrast = (contastRatio, contrastColor, palette) => {

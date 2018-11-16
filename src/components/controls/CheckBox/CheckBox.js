@@ -23,7 +23,7 @@ class CheckBox extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.checked !== this.props.checked ) {
+    if (prevProps.checked !== this.props.checked) {
       this.setState({
         checked: this.props.checked,
       })
@@ -34,26 +34,38 @@ class CheckBox extends Component {
     const { icon, checkedIcon, label, ...other } = this.props
     const { checked } = this.state
     return (
-      // <FormControlLabel
-      // className={css(styles.button)}
-      // control={
-        <Checkbox 
-          checked={checked}
-          className={css(styles.button)}
-          onChange={this.handleChange}
-          icon={icon} 
-          checkedIcon={checkedIcon} {...other} />
-    //   }
-    //   {...other}
-    //   label={label}
-    // />
+      <React.Fragment>
+        {label && (
+          <FormControlLabel
+            className={css(styles.button)}
+            control={
+              <Checkbox
+                checked={checked}
+                onChange={this.handleChange}
+                icon={icon}
+                checkedIcon={checkedIcon} {...other} />
+            }
+            {...other}
+            label={label}
+          />
+        )}
+        {!label && (
+          <Checkbox
+            checked={checked}
+            className={css(styles.button)}
+            onChange={this.handleChange}
+            icon={icon}
+            checkedIcon={checkedIcon} {...other} />
+        )}
+      </React.Fragment>
+
     )
   }
 }
 
 const styles = StyleSheet.create({
   button: {
-    margin:0
+    margin: 0
   }
 })
 

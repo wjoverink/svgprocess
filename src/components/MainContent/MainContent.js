@@ -2,7 +2,7 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import FileUpload from '../controls/FileUpload/FileUpload'
 import ImagesPreview from '../ImagesPreview/ImagesPreview'
-import { processSVG, getVarsFromSVG, collisionDetection } from '../../util/processsvg'
+import { processSVG, getVarsFromSVG } from '../../util/processsvg'
 import { colors } from '../../styles/styles'
 import PropTypes from 'prop-types'
 
