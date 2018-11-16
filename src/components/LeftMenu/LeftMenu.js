@@ -1,5 +1,5 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { font, colors } from '../../styles/styles'
 import PropTypes from 'prop-types'
 import LeftItem from './LeftItem'
@@ -11,7 +11,7 @@ import colorsJSON from '../../colorPalette/colorPalettes'
 import { isFunction, isEmpty, isNumber } from 'lodash'
 import InputTextField from '../controls/InputTextField/InputTextField';
 
-class LeftMenu extends Component {
+class LeftMenu extends PureComponent {
   static propTypes = {
     className: PropTypes.object,
     imagesWidth: PropTypes.number,

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'aphrodite/no-important'
 import MultiSelectDropDown from '../controls/MultiSelectDropDown/MultiSelectDropDown'
-import { isFunction } from 'lodash'
+import { isFunction, uniq } from 'lodash'
 
 class ColorSelector extends Component {
   static propTypes = {
@@ -148,9 +148,9 @@ class ColorSelector extends Component {
   render() {
     const { paletteNames, groupNames, colorNames } = this.state
 
-    const pNames = paletteNames.sort()
-    const gNames = groupNames.sort()
-    const cNames = colorNames.sort()
+    const pNames = uniq(paletteNames.sort())
+    const gNames = uniq(groupNames.sort())
+    const cNames = uniq(colorNames.sort())
     
     return (
       <React.Fragment>

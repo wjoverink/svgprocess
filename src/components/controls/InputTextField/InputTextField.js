@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
@@ -27,7 +27,7 @@ const muiStyles = theme => ({
   },
 });
 
-class InputTextField extends Component {
+class InputTextField extends PureComponent {
   static propTypes = {
     onChange: PropTypes.func
   }

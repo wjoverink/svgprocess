@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { css, StyleSheet } from 'aphrodite/no-important'
 import { withStyles } from '@material-ui/core/styles';
@@ -44,7 +44,7 @@ const muiStyles = theme => ({
   },
 });
 
-class MultiSelectDropDown extends Component {
+class MultiSelectDropDown extends PureComponent {
   static propTypes = {
     className: PropTypes.object,
     items: PropTypes.array,

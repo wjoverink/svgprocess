@@ -1,10 +1,10 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { font, colors } from '../../styles/styles'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 
-class LeftItem extends Component {
+class LeftItem extends PureComponent {
   static propTypes = {
     className: PropTypes.object,
     wrapperClassName: PropTypes.object,

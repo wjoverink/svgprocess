@@ -4,13 +4,12 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import HighlightOff from '@material-ui/icons/HighlightOff'
-import Done from '@material-ui/icons/Done'
 import { IconButton } from '@material-ui/core'
-import { copyToClipBoard } from '../../util/copyToClipBoard'
 import { saveAsSvg } from '../../util/downloadHelper'
 import TextWithClipBoard from '../controls/TextWithClipBoard/TextWithClipBoard'
 import CheckBox from '../controls/CheckBox/CheckBox'
-import contrast from 'get-contrast'
+import PalettePreview from './PalettePreview'
+import { isEqual } from 'lodash';
 
 const checkedState = {
   GOOD: 1,
@@ -27,16 +26,25 @@ class ImagePreview extends Component {
     image: PropTypes.any,
     className: PropTypes.object,
     showDivider: PropTypes.bool,
-    // checkedState: PropTypes.oneOf(Object.keys(checkedState))
   }
   myRef = React.createRef()
 
-  componentDidUpdate() {
-    this.myRef.current.innerHTML = "";
-    if (this.props.image) {
-      this.myRef.current.appendChild(this.props.image.image)
+  componentDidUpdate(prev) {
+    if (prev.image !== this.props.image) {
+      this.myRef.current.innerHTML = "";
+      if (this.props.image) {
+        this.myRef.current.appendChild(this.props.image.image)
+      }
     }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEqual(nextProps.image, this.props.image) || !isEqual(nextProps.width, this.props.width)) {
+      return true
+    }
+    return false
+  }
+
   componentDidMount() {
     this.myRef.current.innerHTML = "";
     if (this.props.image) {
@@ -46,8 +54,6 @@ class ImagePreview extends Component {
   componentWillUnmount() {
     this.myRef.current.innerHTML = "";
   }
-
-
 
   saveSvg = () => {
     const name = this.props.image.name.slice(0, -4) +
@@ -61,23 +67,24 @@ class ImagePreview extends Component {
 
   handleBadClick = checked => {
     const s = this.state.checked === checkedState.BAD ? checkedState.NONE : checkedState.BAD
-    this.setState({ 
-      checked: s 
+    this.setState({
+      checked: s
     })
   }
 
   handleGoodClick = event => {
     const s = this.state.checked === checkedState.GOOD ? checkedState.NONE : checkedState.GOOD
-    this.setState({ 
-      checked: s 
+    this.setState({
+      checked: s
     })
   }
 
   render() {
     const { className, image, width, showDivider, ...other } = this.props
     const palletesString = image.palette && image.palette.palette.toString()
-    const isBadChecked = this.state.checked===checkedState.BAD
-    const isGoodChecked = this.state.checked===checkedState.GOOD
+    const isBadChecked = this.state.checked === checkedState.BAD
+    const isGoodChecked = this.state.checked === checkedState.GOOD
+    const isSmall =  width < 285
 
     return (
       <div className={css(styles.wrapper, className)} {...other}>
@@ -86,7 +93,7 @@ class ImagePreview extends Component {
           <TextWithClipBoard clipBoardText={image.palette.colorName}>
             <span className={css(styles.bold)}>color: </span><span>{image.palette.colorName}</span>
           </TextWithClipBoard>
-          <TextWithClipBoard clipBoardText={image.palette.name}>
+          <TextWithClipBoard clipBoardText={palletesString}>
             <span className={css(styles.bold)}>palette: </span><span>{image.palette.name}</span>
           </TextWithClipBoard>
           <TextWithClipBoard clipBoardText={image.name}>
@@ -94,21 +101,11 @@ class ImagePreview extends Component {
           </TextWithClipBoard>
         </div>)}
         {image.palette && (
-          <div className={css(styles.pColorWrapper)}>
-            {image.palette.palette.map((item, index) => (
-              <TextWithClipBoard
-                // clipBoardText={palletesString}
-                clipBoardText={item}
-                key={item}
-                title={item}
-                style={{ backgroundColor: item }}
-                className={styles.paletteDiv}>
-                { image.usedColors.includes(item) && (
-                  <Done className={css(styles.doneIcon, contrast.ratio(item, '#ffffff') <2 && styles.doneIconBlack)}/>
-                )}
-                </TextWithClipBoard>
-            ))}
-            <div className={css(styles.buttons)}>
+          <div className={css(styles.pColorWrapper, isSmall && styles.directionColumn)}>
+            <div className={css(styles.pColorWrapper)}>
+              <PalettePreview palette={image.palette.palette} usedColors={image.usedColors} />
+            </div>
+            <div className={css(styles.buttons, isSmall && styles.buttonsBreak)}>
               <CheckBox
                 onChange={this.handleBadClick}
                 aria-label="Vote as bad image"
@@ -144,6 +141,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
+  directionColumn: {
+    flexDirection: 'column',
+  },
   buttons: {
     marginLeft: 'auto',
     ':nth-child(1n)>*': {
@@ -152,6 +152,13 @@ const styles = StyleSheet.create({
     ':nth-child(1n)>*:last-child': {
       marginRight: '-10px'
     }
+  },
+  buttonsBreak: {
+    marginLeft: -12,
+    marginTop: 20,
+    display: 'flex',
+    justifyContent:' space-between',
+    marginBottom: -18
   },
   greenColor: {
     color: '#27ae60',
@@ -176,7 +183,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold'
-  },  
+  },
   line: {
     height: 1,
     marginTop: 21,

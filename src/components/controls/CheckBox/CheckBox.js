@@ -34,18 +34,19 @@ class CheckBox extends Component {
     const { icon, checkedIcon, label, ...other } = this.props
     const { checked } = this.state
     return (
-      <FormControlLabel
-      className={css(styles.button)}
-      control={
+      // <FormControlLabel
+      // className={css(styles.button)}
+      // control={
         <Checkbox 
           checked={checked}
+          className={css(styles.button)}
           onChange={this.handleChange}
           icon={icon} 
-          checkedIcon={checkedIcon} />
-      }
-      {...other}
-      label={label}
-    />
+          checkedIcon={checkedIcon} {...other} />
+    //   }
+    //   {...other}
+    //   label={label}
+    // />
     )
   }
 }

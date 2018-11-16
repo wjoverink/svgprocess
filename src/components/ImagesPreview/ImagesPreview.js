@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { css, StyleSheet } from 'aphrodite/no-important'
 import ImagePreview from './ImagePreview'
+import { isEqual } from 'lodash';
 
 class ImagesPreview extends Component {
   static propTypes = {
@@ -14,6 +15,14 @@ class ImagesPreview extends Component {
     showDivider: PropTypes.bool
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    if (!isEqual(nextProps.images, this.props.images) 
+    || !isEqual(nextProps.className, this.props.className)
+    || !isEqual(nextProps.imgWidth, this.props.imgWidth)){
+      return true
+    }
+    return false
+  }
 
   render() {
     const { images, imageClass, labelClass, className, label, showEmpty, imgWidth, showDivider, ...other } = this.props

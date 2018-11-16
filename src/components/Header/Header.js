@@ -1,12 +1,12 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { ReactComponent as KonversedLogo }  from '../../images/klogo.svg'
 import { ReactComponent as Logo }  from '../../images/group-30.svg'
 import { ReactComponent as MarketLogo }  from '../../images/marketplace-icon.svg'
 import { font, colors} from '../../styles/styles'
 import PropTypes from 'prop-types'
 
-class Header extends Component {
+class Header extends PureComponent {
   static propTypes = {
     className: PropTypes.object,
   }
