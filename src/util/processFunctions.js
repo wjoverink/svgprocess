@@ -35,28 +35,28 @@ const processFunctions = {
         return
       }
     }
-    console.log(element)
+
     //[{control:child,color:undefined,enclosed:[], intersection:[]}]
-    const collisionsColors = vars["collisions"]
+    //const collisionsColors = vars["collisions"]
     let newColor = undefined
-    const collision = collisionsColors[index]
-    if (collision.enclosed.length === 0 && collision.intersection.length === 0){
-      newColor = first(difference(pal, vars["autoUsedColors"]))
-      if (!newColor){
-        vars["autoUsedColors"] = []
-        newColor = first(difference(pal, [last(vars["usedColors"])]))
-      }
-    } else {
+    // const collision = collisionsColors[index]
+    // if (collision.enclosed.length === 0 && collision.intersection.length === 0){
+    //   newColor = first(difference(pal, vars["autoUsedColors"]))
+    //   if (!newColor){
+    //     vars["autoUsedColors"] = []
+    //     newColor = first(difference(pal, [last(vars["usedColors"])]))
+    //   }
+    // } else {
      // newColor = findBestColorsForCollision(collisionsColors, collision, pal)
      //   if (newColor === null){
       if (!newColor){
         const usedColors = [last(vars["usedColors"])]
         const autoUsedColors = [...vars["autoUsedColors"]]
-        const encl = find(collisionsColors, {control:last(collision.enclosed)})
-        if (encl && encl.color){
-          usedColors.push(encl.color)
-          autoUsedColors.push(encl.color)
-        }
+        // const encl = find(collisionsColors, {control:last(collision.enclosed)})
+        // if (encl && encl.color){
+        //   usedColors.push(encl.color)
+        //   autoUsedColors.push(encl.color)
+        // }
         newColor = first(difference(pal, autoUsedColors))
         if (!newColor){
           vars["autoUsedColors"] = []
@@ -65,13 +65,13 @@ const processFunctions = {
 
       }
 
-    }
+    //}
     if (!newColor){
       newColor = "white"
     }
     vars["usedColors"].push(newColor)
     vars["autoUsedColors"].push(newColor)
-    collision.color = newColor
+    //collision.color = newColor
 
     // const colParent = find(vars["collisions"], element)
     // if (colParent){

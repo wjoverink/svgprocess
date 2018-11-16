@@ -107,9 +107,9 @@
   <g>
     
   </g>
-  <g>
-    <circle class="dontTouch st13" cx="627" cy="627.1" r="9.5"/>
-    <circle class="dontTouch st13" cx="829.1" cy="627.1" r="9.5"/>
+  <g id="dontTouch_1_">
+    <circle class="st13" cx="627" cy="627.1" r="9.5"/>
+    <circle class="st13" cx="829.1" cy="627.1" r="9.5"/>
   </g>
 </g>
 <polygon class="st4" points="664.4,485.5 706,466.4 740.1,440.9 755.8,473.3 741.1,494.4 698.1,506.1 671.5,505.2  "/>

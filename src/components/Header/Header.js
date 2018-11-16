@@ -1,6 +1,6 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
-import { ReactComponent as KonversedLogo }  from '../../images/konversed-logo.svg'
+import { ReactComponent as KonversedLogo }  from '../../images/klogo.svg'
 import { ReactComponent as Logo }  from '../../images/group-30.svg'
 import { ReactComponent as MarketLogo }  from '../../images/marketplace-icon.svg'
 import { font, colors} from '../../styles/styles'

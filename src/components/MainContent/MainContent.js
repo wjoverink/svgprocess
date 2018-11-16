@@ -41,13 +41,13 @@ class MainContent extends Component {
     const images = []
     for (let j = 0; j < svgs.length; j++) {
       const doc = svgs[j]
-      const collisions = collisionDetection(this.state.originals[j].image)
+      //const collisions = collisionDetection(this.state.originals[j].image)
       const fileName = this.state.originals[j].name
       for (let index = 0; index < this.props.numberOfImages; index++) {
         const vars = getVarsFromSVG(doc.documentElement)
         const p = this.props.palettes[Math.floor((Math.random() * this.props.palettes.length - 1) + 1)]
         vars['colorPalette'] = p.palette
-        vars['collisions'] = collisions
+        //vars['collisions'] = collisions
         vars['mainColor'] = p.palette[0]
         vars['usedColors'] = []
         vars["alwaysUseMainColor"] = this.state.alwaysUseMainColor
