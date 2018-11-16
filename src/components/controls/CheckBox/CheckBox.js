@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { css, StyleSheet } from 'aphrodite/no-important'
 import PropTypes from 'prop-types'
 import { isFunction } from 'lodash'
 import { FormControlLabel, Checkbox } from '@material-ui/core'
 
-class CheckBox extends Component {
+class CheckBox extends PureComponent {
   static propTypes = {
     onChange: PropTypes.func,
     checked: PropTypes.bool,

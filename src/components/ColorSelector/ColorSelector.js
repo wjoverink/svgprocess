@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'aphrodite/no-important'
 import MultiSelectDropDown from '../controls/MultiSelectDropDown/MultiSelectDropDown'
 import { isFunction, uniq } from 'lodash'
 
-class ColorSelector extends Component {
+class ColorSelector extends PureComponent {
   static propTypes = {
     className: PropTypes.object,
     items: PropTypes.array,

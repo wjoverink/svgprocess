@@ -39,7 +39,10 @@ class ImagePreview extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (!isEqual(nextProps.image, this.props.image) || !isEqual(nextProps.width, this.props.width)) {
+    if (!isEqual(nextProps.image, this.props.image) 
+    || !isEqual(nextProps.width, this.props.width)
+    || !isEqual(nextState.checked, this.state.checked)
+    ) {
       return true
     }
     return false
