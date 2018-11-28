@@ -1,0 +1,44 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="200px" height="200px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve" class="icon">
+<style type="text/css">
+.st0 {
+    fill:none;
+    stroke:#F2F2F2;
+    stroke-width:4;
+    stroke-miterlimit:10;
+}
+.icon .st0 {
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s;
+}
+.icon .fill {
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s;
+    fill: #ffffff;
+}
+.icon:hover {
+    cursor: pointer;
+}
+.icon:hover .st0 {
+    stroke: #1f8a4c;
+}
+.icon:hover .fill {
+    -webkit-transform: scale(893, 893);
+    -moz-transform: scale(893, 893);
+    transform: scale(893, 893);
+}
+</style>
+    <g id="fill" transform="translate(101,99)">
+        <circle class="fill" r="0.1" />
+    </g>
+    <g id="container">
+        <circle class="st0" cx="101" cy="99" r="89.333" />
+    </g>
+    <g id="icon-details">
+        <path class="st0" d="M146.899,134.202c3.856,4.702,2.772,11.963-2.418,16.218l0,0c-5.192,4.258-12.523,3.896-16.38-0.806
+        l-30.004-36.594c-3.855-4.701-2.772-11.964,2.418-16.22l0,0c5.19-4.256,12.523-3.895,16.377,0.808L146.899,134.202z" />
+        <circle class="st0" cx="77.843" cy="72.434" r="33.331" />
+        <circle class="st0" cx="77.844" cy="72.434" r="22.343" />
+    </g>
+</svg>

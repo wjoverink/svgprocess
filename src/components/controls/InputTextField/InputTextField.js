@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
-import { isFunction } from 'lodash'
+import { debounce, isFunction } from 'lodash'
 
 const muiStyles = theme => ({
   root: {
@@ -36,15 +36,18 @@ class InputTextField extends PureComponent {
     value: this.props.value,
   }
 
-  handleChange = event => {
-    clearTimeout(this.changeTimeout)
+  constructor(props) {
+    super(props);
+    this.onChangeDebounce = debounce(value => this.props.onChange(value), 500);
+  }
 
+  handleChange = event => {
     this.setState({
       value: event.target.value,
     })
 
     if (isFunction(this.props.onChange)) {
-      this.changeTimeout = setTimeout(this.props.onChange.bind(this, event.target.value), 500);
+      this.onChangeDebounce(event.target.value)
     }
   }
 

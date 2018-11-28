@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'aphrodite/no-important'
 import MultiSelectDropDown from '../controls/MultiSelectDropDown/MultiSelectDropDown'
-import { isFunction, uniq } from 'lodash'
+import { debounce, isFunction, uniq } from 'lodash'
 
 class ColorSelector extends PureComponent {
   static propTypes = {
@@ -11,6 +11,13 @@ class ColorSelector extends PureComponent {
     onChange: PropTypes.func,
     colorsJSON: PropTypes.object,
   }
+
+  
+  constructor(props) {
+    super(props);
+    this.onChangeDebounce = debounce(value => this.props.onChange(value), 1000);
+  }
+
   selectedPalettes = []
   state = {
     show: this.props.isOpen,
@@ -32,7 +39,7 @@ class ColorSelector extends PureComponent {
   onChange = () => {
     clearTimeout(this.changeTimeout)
     if (isFunction(this.props.onChange)) {
-      this.changeTimeout = setTimeout(this.props.onChange.bind(this, this.selectedPalettes), 1000);
+      this.onChangeDebounce(this.selectedPalettes)
     }
   }
 

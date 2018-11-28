@@ -2,7 +2,7 @@ import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
 import FileUpload from '../controls/FileUpload/FileUpload'
 import ImagesPreview from '../ImagesPreview/ImagesPreview'
-import { processSVG, getVarsFromSVG } from '../../util/processsvg'
+import { processSVG } from '../../util/processsvg'
 import { colors } from '../../styles/styles'
 import PropTypes from 'prop-types'
 
@@ -43,7 +43,7 @@ class MainContent extends Component {
       const doc = svgs[j]
       const fileName = this.state.originals[j].name
       for (let index = 0; index < this.props.numberOfImages; index++) {
-        const vars = getVarsFromSVG(doc.documentElement)
+        const vars = []
         const p = this.props.palettes[Math.floor((Math.random() * this.props.palettes.length - 1) + 1)]
         vars['colorPalette'] = p.palette
         vars['mainColor'] = p.palette[0]

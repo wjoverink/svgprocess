@@ -36,19 +36,14 @@ const processFunctions = {
       }
     }
 
-    let newColor = undefined
+    const usedColors = [last(vars["usedColors"])]
+    const autoUsedColors = [...vars["autoUsedColors"]]
 
-      if (!newColor){
-        const usedColors = [last(vars["usedColors"])]
-        const autoUsedColors = [...vars["autoUsedColors"]]
-
-        newColor = first(difference(pal, autoUsedColors))
-        if (!newColor){
-          vars["autoUsedColors"] = []
-          newColor = first(difference(pal, usedColors))
-        }
-
-      }
+    let newColor = first(difference(pal, autoUsedColors))
+    if (!newColor){
+      vars["autoUsedColors"] = []
+      newColor = first(difference(pal, usedColors))
+    }
 
     if (!newColor){
       newColor = "white"
@@ -59,7 +54,15 @@ const processFunctions = {
     if (parentElement) {
       parentElement.color = newColor
     }
-    element.setAttribute("style", "fill:" + newColor)
+    if (element.attributes['stroke']){
+      element.attributes['stroke'].nodeValue = newColor
+    } else {
+      if (!element.attributes['style']){
+        element.setAttribute("style", "fill:" + newColor)
+      } else {
+        element.attributes['style'].nodeValue += ";fill:" + newColor
+      }
+    }
   },
   isMainColor: (element, idArray, vars) => {
     vars["mainColor"] = last(vars["usedColors"])
