@@ -1,0 +1,102 @@
+<svg id="Content-R" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 598 598">
+    <path id="palleteColorNotUsed_isSecondaryColor" fill="#29ABE2" d="M0 0h598v598H0z"/>
+
+    <path id="shapefilled-A" fill="#FFF" d="M374.1 324h-21l-34-130h-40l-55 210H265l10.5-40h47.2l10.5 40h40.9l-10.5-40h10.5v-40zm-88.1 0l13.1-50 13.1 50H286z" style="animation:fadeIn 10000ms ease-in-out forwards"/>
+
+    <g id="grid-A" style="animation:fadeOut 10000ms ease-in forwards">
+
+        <path id="dontTouch_c9" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M299.1 274c35.9 0 65 29.1 65 65s-29.1 65-65 65-65-29.1-65-65 29.1-65 65-65" style="animation:strokeoffset 500ms linear 7800ms forwards" stroke-dasharray="409 411" stroke-dashoffset="-410"/>
+        <path id="dontTouch_c8" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M299.1 324c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40" style="animation:strokeoffset 500ms linear 7800ms forwards" stroke-dasharray="252 254" stroke-dashoffset="-253"/>
+        <path id="dontTouch_c7" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M299.1 194c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40" style="animation:strokeoffset 500ms linear 7600ms forwards" stroke-dasharray="252 254" stroke-dashoffset="-253"/>
+
+
+        <path id="_x31_4" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M374.1 194v210" style="animation:strokeoffset 500ms linear 7600ms forwards" stroke-dasharray="210 212" stroke-dashoffset="211"/>
+        <path id="dontTouch_c6" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M319.1 384c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10 10 4.5 10 10" style="animation:strokeoffset 500ms linear 7400ms forwards" stroke-dasharray="63 65" stroke-dashoffset="64"/>
+        <path id="dontTouch_c5" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M279.1 384c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10c-5.6 0-10-4.5-10-10" style="animation:strokeoffset 500ms linear 7400ms forwards" stroke-dasharray="63 65" stroke-dashoffset="-64"/>
+        <path id="_x31_3" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M319.1 194v210" style="animation:strokeoffset 500ms linear 7400ms forwards" stroke-dasharray="210 212" stroke-dashoffset="211"/>
+        <path id="_x31_2" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M299.1 194v210" style="animation:strokeoffset 500ms linear 7200ms forwards" stroke-dasharray="210 212" stroke-dashoffset="211"/>
+        <path id="_x31_1" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M279.1 194v210" style="animation:strokeoffset 500ms linear 7000ms forwards" stroke-dasharray="210 212" stroke-dashoffset="211"/>
+
+        <path id="_x31_0" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M224.1 364h150" style="animation:strokeoffset 500ms linear 7000ms forwards" stroke-dasharray="150 152" stroke-dashoffset="151"/>
+        <path id="_x39_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M224.1 344h150" style="animation:strokeoffset 500ms linear 6800ms forwards" stroke-dasharray="150 152" stroke-dashoffset="151"/>
+        <path id="dontTouch_c4" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M299.1 364c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10" style="animation:strokeoffset 500ms linear 6800ms forwards" stroke-dasharray="63 65" stroke-dashoffset="-64"/>
+        <path id="dontTouch_c3" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M299.1 324c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.4-10 10-10" style="animation:strokeoffset 500ms linear 6800ms forwards" stroke-dasharray="63 65" stroke-dashoffset="64"/>
+        <path id="_x38_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M224.1 324h150" style="animation:strokeoffset 500ms linear 6600ms forwards" stroke-dasharray="150 152" stroke-dashoffset="151"/>
+        <path id="_x37_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M224.1 274h150" style="animation:strokeoffset 500ms linear 6400ms forwards" stroke-dasharray="150 152" stroke-dashoffset="151"/>
+
+        <path id="_x36_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M278.6 195.8L367.2 534" style="animation:strokeoffset 900ms linear 5900ms forwards" stroke-dasharray="350 352" stroke-dashoffset="351"/>
+        <path id="_x35_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M387.4 534l-88.3-337.4" style="animation:strokeoffset 1100ms linear 6100ms forwards" stroke-dasharray="349 351" stroke-dashoffset="-350"/>
+        <path id="_x34_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M374.1 404l-55-210" style="animation:strokeoffset 1300ms linear 6300ms forwards" stroke-dasharray="218 220" stroke-dashoffset="-219"/>
+
+        <path id="dontTouch_c2" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M279.4 349.1c-1.4 5.3-6.7 8.5-12 7.1s-8.4-6.9-7-12.2 6.7-8.5 12-7.1 8.4 6.8 7 12.2" style="animation:strokeoffset 500ms linear 5500ms forwards" stroke-dasharray="63 65" stroke-dashoffset="64"/>
+        <path id="dontTouch_c1" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M241.1 338.9c1.4-5.3 6.9-8.5 12.2-7.1 5.3 1.4 8.5 6.9 7.1 12.2s-6.9 8.5-12.2 7.1-8.5-6.8-7.1-12.2" style="animation:strokeoffset 500ms linear 5500ms forwards" stroke-dasharray="63 65" stroke-dashoffset="-64"/>
+
+        <path id="_x33_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M224.1 404l55-210" style="animation:strokeoffset 900ms linear 5000ms forwards" stroke-dasharray="218 220" stroke-dashoffset="219"/>
+        <path id="_x32_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M224.1 482.9l75-286.3" style="animation:strokeoffset 1100ms linear 5100ms forwards" stroke-dasharray="296 298" stroke-dashoffset="297"/>
+        <path id="_x31_" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M319.5 195.8L230.9 534" style="animation:strokeoffset 1300ms linear 5200ms forwards" stroke-dasharray="350 352" stroke-dashoffset="-351"/>
+    </g>
+
+
+    <g id="dontTouch_fib-grid" style="animation:fadeOut 10000ms ease-in forwards">
+        <path id="fib-frame" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M434.1 194v340h-210V194h210" style="animation:strokeoffset 4900ms ease-in-out 100ms forwards" stroke-dasharray="1100 1102" stroke-dashoffset="-1101"/>
+        <path id="fib-2" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M354.1 534V404" style="animation:strokeoffset 1300ms ease-in-out 2600ms forwards" stroke-dasharray="130 132" stroke-dashoffset="131"/>
+        <path id="fib-3" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M354.1 454h80" style="animation:strokeoffset 800ms ease-in-out 3100ms forwards" stroke-dasharray="80 82" stroke-dashoffset="-81"/>
+        <path id="fib-1" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M434.1 404h-210" style="animation:strokeoffset 2400ms ease-in-out 2000ms forwards" stroke-dasharray="210 212" stroke-dashoffset="-211"/>
+        <path id="fib-4" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M384.1 454v-50" style="animation:strokeoffset 500ms ease-in-out 3500ms forwards" stroke-dasharray="50 52" stroke-dashoffset="-51"/>
+        <path id="fib-5" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M354.1 434h30" style="animation:strokeoffset 300ms ease-in-out 3750ms forwards" stroke-dasharray="30 32" stroke-dashoffset="-31"/>
+        <path id="fib-6" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M374.1 434v20" style="animation:strokeoffset 200ms ease-in-out 3850ms forwards" stroke-dasharray="20 22" stroke-dashoffset="-21"/>
+        <path id="fib-7" fill="none" stroke="#FFF" stroke-miterlimit="10" d="M374.1 444h10" style="animation:strokeoffset 100ms ease-in-out 3950ms forwards" stroke-dasharray="10 12" stroke-dashoffset="-11"/>
+    </g>
+
+    <g id="spiral" style="animation:fadeOut 10000ms ease-in forwards">
+        <path id="fib-spiral" fill="none" stroke="#0F0" stroke-miterlimit="10" d="M374.1 434c5.5 0 10 4.5 10 10s-4.5 10-10 10c-11.1 0-20-8.9-20-20 0-16.6 13.4-30 30-30 27.6 0 50 22.4 50 50 0 44.2-35.8 80-80 80-71.9 0-130-58.1-130-130 0-116.1 93.9-210 210-210" style="animation:strokeoffset 4900ms ease-in-out 100ms forwards" stroke-dasharray="849 851" stroke-dashoffset="-850"/>
+    </g>
+    <style data-made-with="vivus-instant">
+
+        @keyframes strokeoffset {
+            to {
+                stroke-dashoffset: 0
+            }
+        }
+        @keyframes strokefade {
+            0%, 95.65217391304348% {
+                stroke-opacity: 1
+            }
+            to {
+                stroke-opacity: 0
+            }
+        } 
+        @keyframes strokefade2 {
+            0%, 94.44444444444444% {
+                stroke-opacity: 1
+            }
+            to {
+                stroke-opacity: 0
+            }
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            80% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+</svg>
+

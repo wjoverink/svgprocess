@@ -6,20 +6,21 @@ const processSVG = (svg, processvars) => {
   const children = recursivelyGetChildNodes(svg)
   processvars["allChildren"] = children
   children.forEach((child, index) => {
-    if (child.className.baseVal) {
+    // if (child.className.baseVal) {
       const idArray = child.id.split(splitOn)
-      idArray.forEach((str) => {
-        if (processFunctions[str]) {
-          processFunctions[str](child, idArray, processvars)
-        } else { 
-          //AUTO color
-          processFunctions["palleteColorNotUsed"](child, idArray, processvars, index)
-        }
-      })
-    } else {
-      //AUTO color
-      processFunctions["palleteColorNotUsed"](child, [], processvars, index)
-    }
+      if (!idArray.includes('dontTouch')){
+        idArray.forEach((str) => {
+          if (processFunctions[str]) {
+            processFunctions[str](child, idArray, processvars)
+          } else { 
+            //AUTO color
+            processFunctions["palleteColorNotUsed"](child, idArray, processvars, index)
+          }
+        })}
+    // } else {
+    //   //AUTO color
+    //   processFunctions["palleteColorNotUsed"](child, [], processvars, index)
+    // }
   })
   return svg
 }
