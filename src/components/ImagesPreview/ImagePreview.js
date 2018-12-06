@@ -76,6 +76,10 @@ class ImagePreview extends PureComponent {
     this.setState({ anchorEl: event.currentTarget });
   }
 
+  _handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+  }
+
   render() {
     const { className, image, width, showDivider, ...other } = this.props
     const { showCanvas, anchorEl, isLoading } = this.state
@@ -123,7 +127,7 @@ class ImagePreview extends PureComponent {
           id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={this._handleClose}>
+          onClose={this._handleMenuClose}>
           <MenuItem onClick={this._saveSvg}>.svg</MenuItem>
           <MenuItem onClick={this._savePng}>.png</MenuItem>
           <MenuItem onClick={this._saveAsMovie}>.webm</MenuItem>
