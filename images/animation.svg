@@ -2,7 +2,7 @@
       <style type="text/css">
 .artwork {
   transform-origin: 0;
-  animation: artwork 4000ms ease-in-out infinite;
+  <!-- animation: artwork 4000ms ease-in-out infinite; -->
 }
 @keyframes artwork {
   000% {
@@ -34,7 +34,7 @@
 
 .raygun {
   transform-origin: center;
-  animation: raygun 4000ms ease-in-out infinite;
+  <!-- animation: raygun 4000ms ease-in-out infinite; -->
 }
 @keyframes raygun {
   000% {
@@ -80,7 +80,7 @@
 
 .gun-trigger {
   transform-origin: center 20%;
-  animation: gun-trigger 4000ms ease-in-out infinite;
+  <!-- animation: gun-trigger 4000ms ease-in-out infinite; -->
 }
 @keyframes gun-trigger {
   000%,
@@ -97,7 +97,7 @@
 }
 
 .sheen {
-  animation: sheen 4000ms ease-in-out infinite;
+  <!-- animation: sheen 4000ms ease-in-out infinite; -->
 }
 @keyframes sheen {
   000%,
@@ -116,7 +116,7 @@
 
 .gun-charge {
   transform-origin: center;
-  animation: gun-charge 4000ms ease-in-out infinite;
+  <!-- animation: gun-charge 4000ms ease-in-out infinite; -->
 }
 @keyframes gun-charge{
   000%,
@@ -137,7 +137,7 @@
 }
 
 .line {
-  animation: fire 4000ms ease-in-out infinite;
+  <!-- animation: fire 4000ms ease-in-out infinite; -->
 }
 @keyframes fire {
   0%,
@@ -163,7 +163,7 @@
 }
 
 .beam-white {
-  animation: white-beam 4000ms ease-in-out infinite;
+  <!-- animation: white-beam 4000ms ease-in-out infinite; -->
 }
 @keyframes white-beam {
   000%,
@@ -185,7 +185,7 @@
 }
 
 .beam-blue {
-  animation: blue-beam 4000ms ease-in-out infinite;
+  <!-- animation: blue-beam 4000ms ease-in-out infinite; -->
 }
 @keyframes blue-beam {
   000%,
@@ -213,14 +213,14 @@
         <path d="M489,194.27C345,169.72,288,261,288,300c0,40.49,57,130.08,201,105.53,5.43-.93,10.42-1.8,15-2.64V196.7C499.42,195.86,494.43,195.19,489,194.27Z" style="fill: none"/>
       </clipPath>
     </defs>
-    <g class="artwork" id="artwork" data-name="artwork">
-      <circle class="gun-charge" id="charging-circle" cx="568" cy="300" r="164" style="fill: #4193f2"/>
+    <g class="artwork" style="animation: artwork 4000ms ease-in-out infinite" id="artwork" data-name="artwork">
+      <circle class="gun-charge" id="charging-circle" cx="568" cy="300" r="164" style="animation: gun-charge 4000ms ease-in-out infinite;fill: #4193f2"/>
       <g id="beam">
-        <line class="beam-blue" id="line-blue" x1="569" y1="300" x2="2000" y2="300" stroke="#4193f2" style="stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="beam-white" id="line-white" x1="569" y1="300" x2="2000" y2="300" stroke="#fff" style="stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="beam-blue" id="line-blue" x1="569" y1="300" x2="2000" y2="300" stroke="#4193f2" style="animation: blue-beam 4000ms ease-in-out infinite;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="beam-white" id="line-white" x1="569" y1="300" x2="2000" y2="300" stroke="#fff" style="animation: white-beam 4000ms ease-in-out infinite;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
       </g>
-      <g class="raygun" id="raygun">
-        <path class="gun-trigger" id="gun-trigger" d="M463.91,390.15a14,14,0,1,0-18.07,16.12C452.5,434.44,466,439.76,466,439.76l-7.34-35.62A14,14,0,0,0,463.91,390.15Z" style="fill: #86a4b7"/>
+      <g class="raygun" style="animation: raygun 4000ms ease-in-out infinite" id="raygun">
+        <path class="gun-trigger" style="fill: #86a4b7;animation: gun-trigger 4000ms ease-in-out infinite" id="gun-trigger" d="M463.91,390.15a14,14,0,1,0-18.07,16.12C452.5,434.44,466,439.76,466,439.76l-7.34-35.62A14,14,0,0,0,463.91,390.15Z"/>
         <path id="handle-grip" d="M419,392s-17.61,46-9.75,84c0,0-23.3,1.33-29.26-19,0,0-2.17-43.33,19.51-67Z" style="fill: #86a4b7"/>
         <path id="handle" d="M358.21,391.64c10.73,7.56,29.79,27.68,10.27,67.4a2,2,0,0,0,.08,1.93c2.42,3.88,13,18,38.07,16.32a2,2,0,0,0,.68-3.83c-13.23-5.83-33.71-24.49-2-82.49a2,2,0,0,0-1.75-3H359.35A2,2,0,0,0,358.21,391.64Z" style="fill: #aa1f25"/>
         <path id="fin-background" d="M313.14,233.89l-31.65-47.7A4,4,0,0,1,282,180c14.71-10,61.33-24,139.76,8.16,3.87,1.59,2.4,7.55-1.79,7.57-23.91.07-68.2,5.2-101.26,38.11A4,4,0,0,1,313.14,233.89Z" style="fill: #cab02d"/>
@@ -239,7 +239,7 @@
         </g>
         <g id="mask-shine">
           <g style="clip-path: url(#clip-path)">
-            <polygon class="sheen" id="sheen" points="392 188 184 188 407 412 616 412 392 188" style="fill: #fff"/>
+            <polygon class="sheen" id="sheen" points="392 188 184 188 407 412 616 412 392 188" style="fill: #fff;animation: sheen 4000ms ease-in-out infinite"/>
           </g>
         </g>
         <g id="gun-metal">
@@ -262,14 +262,14 @@
         </g>
       </g>
       <g id="shockwave">
-        <line class="line" id="line-8" x1="568" y1="300" x2="568" y2="156" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-7" x1="568" y1="300" x2="669.82" y2="198.18" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-6" x1="568" y1="300" x2="712" y2="300" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-5" x1="568" y1="300" x2="669.82" y2="401.82" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-4" x1="568" y1="300" x2="568" y2="444" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-3" x1="568" y1="300" x2="466.18" y2="401.82" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-2" x1="568" y1="300" x2="424" y2="300" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
-        <line class="line" id="line-1" x1="568" y1="300" x2="466.18" y2="198.18" style="fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-8" x1="568" y1="300" x2="568" y2="156" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-7" x1="568" y1="300" x2="669.82" y2="198.18" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-6" x1="568" y1="300" x2="712" y2="300" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-5" x1="568" y1="300" x2="669.82" y2="401.82" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-4" x1="568" y1="300" x2="568" y2="444" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-3" x1="568" y1="300" x2="466.18" y2="401.82" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-2" x1="568" y1="300" x2="424" y2="300" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
+        <line class="line" id="line-1" x1="568" y1="300" x2="466.18" y2="198.18" style="animation: fire 4000ms ease-in-out infinite;fill: none;stroke: #fff;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 8px"/>
       </g>
     </g>
   </svg>
