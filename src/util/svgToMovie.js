@@ -10,17 +10,16 @@ const svg2canvas = (svg, ctx, callback) => {
   img.src = url;
 }
 
-const toPng = (svg, canvas, width, height, finished) => {
+const toImage = (svg, canvas, width, height, type, finished) => {
   const ctx = canvas.getContext('2d')
 
   canvas.width = width; //svg.clientWidth;
   canvas.height = height; //svg.clientHeight;
 
   svg2canvas(svg, ctx, () => {
-    finished(canvas.toDataURL("image/png"))
+    finished(canvas.toDataURL("image/"+type))
   })
 }
-
 
 class CanvasRecorder {
   constructor(options) {
@@ -44,7 +43,7 @@ class CanvasRecorder {
       track = stream.getVideoTracks && stream.getVideoTracks()[0];
 
     const chunks = [],
-      recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+      recorder = new MediaRecorder(stream, { mimeType: "video/webm;codecs=h264" });
 
     recorder.ondataavailable = function (e) {
       const blob = e.data;
@@ -53,7 +52,7 @@ class CanvasRecorder {
 
     recorder.onstop = (e) => {
       //console.log('stop', e);
-      const url = URL.createObjectURL(new Blob(chunks, { type: "video/webm" }));
+      const url = URL.createObjectURL(new Blob(chunks, { type: "video/webm;codecs=h264" }));
       callback(url);
     };
 
@@ -124,7 +123,7 @@ const convertToMovie = (svg, canvas, width, height, finished) => {
 
   function render(time, frame, callback) {
     //20fps is more than enough..
-    if ((frame % 3) !== 1) { callback(); return; }
+    if ((frame % 2) !== 1) { callback(); return; }
 
     //console.log('rendering', frameNum, time);
     freeze(time);
@@ -159,6 +158,6 @@ const convertToMovie = (svg, canvas, width, height, finished) => {
 
 export {
   convertToMovie,
-  toPng
+  toImage
 }
 

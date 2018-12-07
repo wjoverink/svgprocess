@@ -1,6 +1,5 @@
 import { css, StyleSheet } from 'aphrodite/no-important'
 import React, { Component } from 'react'
-import provideScrollPosition from 'react-provide-scroll-position'
 import Header from '../Header/Header'
 import LeftMenu from '../LeftMenu/LeftMenu';
 import MainContent from '../MainContent/MainContent'
@@ -122,4 +121,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default provideScrollPosition(MainPage)
+export default MainPage

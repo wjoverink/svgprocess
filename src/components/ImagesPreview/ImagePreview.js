@@ -8,7 +8,7 @@ import TextWithClipBoard from '../controls/TextWithClipBoard/TextWithClipBoard'
 import PalettePreview from './PalettePreview'
 import ImageControl from './ImageControl'
 import VoteControl from './VoteControl'
-import { convertToMovie, toPng } from '../../util/svgToMovie'
+import { convertToMovie, toImage } from '../../util/svgToMovie'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import LinearProgress from '@material-ui/core/LinearProgress'
@@ -42,34 +42,33 @@ class ImagePreview extends PureComponent {
     saveAsSvg(this.props.image.image, this._createName('.svg'))
   }
 
-  _finishedPng(url){
+  _finishedConversion= (extension) => (url) => {
     this.setState({ showCanvas:false, anchorEl: null, isLoading: false });
-    downloadfile(url,this._createName('.png'))
+    downloadfile(url,this._createName(extension))
   }
 
-  _savePng = () => {
+  _saveAs = (convTo) => {
     const t = this.myImageControlRef.current.myRef.current.getBoundingClientRect()
     this.setState({
       showCanvas: true,
       anchorEl: null,
       isLoading: true
     })
-    toPng(this.props.image.image, this.myRef.current, t.width, t.height, this._finishedPng.bind(this))
-  }
-
-  _finishedMovie(url){
-    this.setState({ showCanvas:false, anchorEl: null, isLoading: false });
-    downloadfile(url,this._createName('.webm'))
-  }
-
-  _saveAsMovie = () => {
-    const t = this.myImageControlRef.current.myRef.current.getBoundingClientRect()
-    this.setState({
-      showCanvas: true,
-      anchorEl: null,
-      isLoading: true
-    })
-    convertToMovie(this.props.image.image, this.myRef.current, t.width, t.height, this._finishedMovie.bind(this))
+    switch (convTo) {
+      case 'webm':
+        convertToMovie(this.props.image.image, this.myRef.current, t.width, t.height, this._finishedConversion('.webm').bind(this))
+        break;
+      case 'mp4':
+        convertToMovie(this.props.image.image, this.myRef.current, t.width, t.height, this._finishedConversion('.mp4').bind(this))
+        break;
+      case 'jpeg':
+        toImage(this.props.image.image, this.myRef.current, t.width, t.height, 'jpeg', this._finishedConversion('.jpeg').bind(this))
+        break;
+      case 'png':
+      default:
+        toImage(this.props.image.image, this.myRef.current, t.width, t.height, 'png', this._finishedConversion('.png').bind(this))
+        break;
+    }
   }
 
   _handleDownloadClick = event => {
@@ -129,8 +128,11 @@ class ImagePreview extends PureComponent {
           open={Boolean(anchorEl)}
           onClose={this._handleMenuClose}>
           <MenuItem onClick={this._saveSvg}>.svg</MenuItem>
-          <MenuItem onClick={this._savePng}>.png</MenuItem>
-          <MenuItem onClick={this._saveAsMovie}>.webm</MenuItem>
+          <MenuItem onClick={this._saveAs.bind(this, 'png')}>.png</MenuItem>
+          <MenuItem onClick={this._saveAs.bind(this, 'jpeg')}>.jpeg</MenuItem>
+          <MenuItem onClick={this._saveAs.bind(this, 'webm')}>.webm</MenuItem>
+          <MenuItem onClick={this._saveAs.bind(this, 'mp4')}>.mp4</MenuItem>
+          {/* <MenuItem onClick={this._saveAs.bind(this, 'whammy')}>.test</MenuItem> */}
         </Menu>
       </div>
     )
